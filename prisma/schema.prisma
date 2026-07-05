@@ -1,0 +1,115 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  aluno
+  monitor
+}
+
+enum AppointmentStatus {
+  upcoming
+  completed
+  cancelled
+}
+
+model User {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  image         String?
+  email         String        @unique
+  role          String      @default("aluno")
+  subtitle      String?
+  createdAt     DateTime      @default(now())
+  emailVerified DateTime?
+
+  monitor      Monitor?
+  appointments Appointment[] @relation("StudentAppointments")
+
+  accounts     Account[]
+  sessions     Session[]
+}
+
+model Monitor {
+  id            String            @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String            @unique @db.ObjectId
+  subject       String
+  department    String
+  bio           String?
+  rating        Float             @default(0)
+  totalSessions Int               @default(0)
+  createdAt     DateTime          @default(now())
+
+  user          User              @relation(fields: [userId], references: [id])
+  slots         AvailableSlot[]
+  appointments  Appointment[]
+
+}
+
+model AvailableSlot {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  monitorId   String        @db.ObjectId
+  date        DateTime
+  isBooked    Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+
+  monitor     Monitor       @relation(fields: [monitorId], references: [id])
+  appointment Appointment?
+
+  @@index([monitorId, date])
+}
+
+model Appointment {
+  id         String            @id @default(auto()) @map("_id") @db.ObjectId
+  slotId     String            @unique @db.ObjectId
+  studentId  String            @db.ObjectId
+  monitorId  String            @db.ObjectId
+  topic      String
+  status     AppointmentStatus @default(upcoming)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  slot       AvailableSlot     @relation(fields: [slotId], references: [id])
+  student    User              @relation("StudentAppointments", fields: [studentId], references: [id])
+  monitor    Monitor           @relation(fields: [monitorId], references: [id])
+
+  @@index([studentId])
+  @@index([monitorId])
+  @@index([status])
+}
+
+model Account {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String @db.ObjectId
+
+  type              String
+  provider          String
+  providerAccountId String
+
+  access_token      String?
+  refresh_token     String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
