@@ -1,16 +1,35 @@
-export default function monitores() {
+import MonitorSearch from "@/components/monitors/monitorSearch";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma"
+import { redirect } from "next/navigation";
+
+import { Prisma } from "@prisma/client";
+
+export type MonitorWithSlots = Prisma.MonitorGetPayload<{
+  include: {
+    slots: true;
+    user: true;
+    appointments: true
+  };
+}>;
+
+export default async function Monitores(){
+  const session = await auth();
+
+  if(session?.user.activeProfile == "monitor") redirect("/");
+
+  const monitores: MonitorWithSlots[] = await prisma.monitor.findMany({
+    include: {slots: true, user: true, appointments: true}
+  });
+
   return (
-    <div className="space-y-6">
-              <div>
-                <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1">Monitores disponíveis</p>
-                <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Encontre um monitor</h1>
-              </div>
-              <div className="flex gap-3 flex-col sm:flex-row">
-                <div className="relative flex-1">
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                </div>
-              </div>
-            </div>
-  );
+    <div className="h-full w-full flex flex-col gap-10">
+      <div className="">
+        <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1">Monitores disponíveis</p>
+        <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Encontre um monitor</h1>
+      </div>
+
+      <MonitorSearch monitores={monitores} />
+    </div>
+  )
 }

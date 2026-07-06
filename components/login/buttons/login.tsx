@@ -4,18 +4,20 @@ import { ChevronRight, GraduationCap } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 export function LoginButton({userType} : {userType: string}){
+    // objeto responsável por exibir corretamente as informações de cada componente
     const user = {
         title: userType == "aluno" ? "Aluno" : "Monitor",
         description: userType == "aluno" ? "Agende atendimentos com monitores" : "Gerencie seus horários e atendimentos"
     };
 
     return (
-        <button className={`w-full bg-card border border-border rounded-lg p-5 text-left cursor-pointer 
-        hover:border-primary/50 hover:shadow-sm transition-all group flex items-center gap-4`}
+        <button 
+        className={`w-full bg-card border border-border rounded-lg p-5 text-left cursor-pointer hover:border-primary/50 
+        hover:shadow-sm transition-all group flex items-center gap-4`}
         onClick={ async() => {
-            await signIn("google", {callbackUrl : `/api/login?role=${userType}`}); 
+            await signIn("google", {callbackUrl : `/api/login/${userType}`}); 
         }}>
-
+            
             <div className={`w-11 h-11 bg-secondary rounded-lg flex items-center justify-center shrink-0 
             group-hover:bg-primary/10 transition-colors`}>
 
@@ -27,6 +29,7 @@ export function LoginButton({userType} : {userType: string}){
                     {user.description}
                 </p>
             </div>
+            
             <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors"/>
         </button>
     );

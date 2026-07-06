@@ -1,94 +1,112 @@
 "use client"
 
 import { BookOpen, ClipboardList, LayoutDashboard, LogOut, LucideIcon, Users } from "lucide-react"
-import { User } from "next-auth";
-import { signOut } from "next-auth/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Navegation from "./navegation";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import MobilenNavbar from "./mobileNavbar";
+import { signOut } from "next-auth/react";
+import Navegation from "./navegation";
+import { User } from "next-auth";
+import Image from "next/image";
 
+// tipagem da navegação da sidebar
 export type NavItemsType = {
     id: string,
     label: string,
     icon: LucideIcon
 };
 
-const alunoNavItems: NavItemsType[] = [
-    { id: "dashboard", label: "Início", icon: LayoutDashboard },
-    { id: "Monitores", label: "Monitores", icon: Users },
-    { id: "atendimentos", label: "Meus Atendimentos", icon: ClipboardList },
-];
+// define os items da navegação da sidebar
+function getNavItems({role} : {role: "monitor" | "aluno"}){
+    let isMonitor = role == "monitor";
 
-const monitorNavItems: NavItemsType[] = [
-    { id: "dashboard", label: "Painel", icon: LayoutDashboard },
-    { id: "atendimentos", label: "Atendimentos", icon: ClipboardList },
-    { id: "perfil", label: "Meu perfil", icon: Users },
-];
+    return [
+        { id: "/dashboard", label: isMonitor ? "Painel" : "Início", icon: LayoutDashboard },
+        { id: isMonitor ? "/atendimentos" : "/monitores", label: isMonitor ? "Atendimentos" : "Monitores", icon: isMonitor ? ClipboardList : Users },
+        { id: isMonitor ? "/perfil"  : "/atendimentos", label: isMonitor ? "Meu perfil" : "Meus Atendimentos", icon: isMonitor ? Users :  ClipboardList},
+    ]
+}
 
 export default function Sidebar({user} : {user: User}) {
-    const [activeView, setActiveView] = useState<string>("dashboard");
+    const [activeView, setActiveView] = useState<string>("/dashboard");
+    const [mobileMenu, setMobileMenu] = useState<boolean>(false);
+
+    // track o path para colorir os items na navegação corretamente
     const pathname = usePathname().split("/")[1];
 
     useEffect(() => {
-        setActiveView(pathname);
+        setActiveView("/" + pathname);
     }, [pathname]);
 
-    const navItems: NavItemsType[] = user.role == "aluno" ? alunoNavItems : monitorNavItems;
+    // items de navegação para a redenrização
+    const navItems: NavItemsType[] = getNavItems({role: user.activeProfile});
     
     return (
         <>
-        <aside
-            className={`w-64 max-lg:hidden bg-sidebar lg:flex flex-col transition-transform duration-200 lg:translate-x-0`}>
-            <div className="px-6 py-6 border-b border-sidebar-border">
-                <div className="flex items-center gap-2.5">
-                    <div className="w-7 h-7 bg-sidebar-primary rounded flex items-center justify-center">
-                        <BookOpen className="w-4 h-4 text-sidebar" />
-                    </div>
+            {/* BLUR DO MOBILE */}
+            <div className={`w-screen h-screen fixed inset-0 bg-black/50 backdrop-blur-md z-5 ${!mobileMenu && "hidden"}`} 
+            onClick={()=> setMobileMenu(false)} />
 
-                    <div>
-                    <p 
-                    className="text-sidebar-foreground text-lg leading-none" 
-                    style={{ fontFamily: "'Instrument Serif', serif" }}>
-                        AtendeMonitor
-                    </p>
+            {/* SIDEBAR DO DESKTOP */}
+            <aside
+                className={`w-64 bg-sidebar flex flex-col transition-transform duration-500 z-20 min-h-screen
+                lg:translate-x-0 -translate-x-full lg:relative absolute ${mobileMenu && "translate-x-0"}`}>
 
-                    <p className="text-xs font-mono text-sidebar-foreground/50 mt-0.5 leading-none">
-                        Sistema de monitorias
-                    </p>
-                    
-                    </div>
-                </div>
-            </div>
+                {/* HEADER */}
+                <div className="px-6 py-6 border-b border-sidebar-border">
+                    <div className="flex items-center gap-2.5">
+                        <div className="w-7 h-7 bg-sidebar-primary rounded flex items-center justify-center">
+                            <BookOpen className="w-4 h-4 text-sidebar" />
+                        </div>
 
-            <Navegation navItems={navItems} activeView={activeView} />
+                        <div>
+                        <p 
+                        className="text-sidebar-foreground text-lg leading-none" 
+                        style={{ fontFamily: "'Instrument Serif', serif" }}>
+                            AtendeMonitor
+                        </p>
 
-            <div className="px-4 py-4 border-t border-sidebar-border">
-                <div className="flex items-center gap-3 mb-3">
-                    <Image 
-                        width={32}
-                        height={32}
-                        className={`rounded-full bg-sidebar-accent flex items-center justify-center 
-                        shrink-0 text-xs font-medium text-sidebar-foreground`}
-                        src={user.image ?? ""} 
-                        alt={"user icon"} 
-                    />
-
-                    <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-sidebar-foreground leading-none truncate">{user.name}</p>
-                        <p className="text-xs font-mono text-sidebar-foreground/50 mt-0.5 truncate">{user.role}</p>
+                        <p className="text-xs font-mono text-sidebar-foreground/50 mt-0.5 leading-none">
+                            Sistema de monitorias
+                        </p>
+                        
+                        </div>
                     </div>
                 </div>
-                <button
-                    onClick={ ()=> signOut()}
-                    className={`w-full cursor-pointer flex items-center gap-2 px-3 py-3 rounded text-sm 
-                    text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/40 transition-colors`}
-                >
-                    <LogOut className="w-4 h-4"/>
-                    Sair
-                </button>
-            </div>
-        </aside>
+
+                {/* NAVEGAÇÃO */}
+                <Navegation navItems={navItems} activeView={activeView} setMobileMenu={setMobileMenu} />
+
+                {/* FOOTER */}
+                <div className="px-4 py-4 border-t border-sidebar-border">
+                    <div className="flex items-center gap-3 mb-3">
+                        <Image 
+                            width={32}
+                            height={32}
+                            className={`rounded-full bg-sidebar-accent flex items-center justify-center 
+                            shrink-0 text-xs font-medium text-sidebar-foreground`}
+                            src={user.image ?? ""} 
+                            alt={"user icon"} 
+                        />
+
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-sidebar-foreground leading-none truncate">{user.name}</p>
+                            <p className="text-xs font-mono text-sidebar-foreground/50 mt-0.5 truncate">{user.activeProfile}</p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={ ()=> signOut()}
+                        className={`w-full cursor-pointer flex items-center gap-2 px-3 py-3 rounded text-sm 
+                        text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/40 transition-colors`}
+                    >
+                        <LogOut className="w-4 h-4"/>
+                        Sair
+                    </button>
+                </div>
+            </aside>
+                        
+            {/* NAVBAR DO MOBILE */}
+            <MobilenNavbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
         </>
     );
 }

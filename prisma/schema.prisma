@@ -8,27 +8,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  aluno
-  monitor
-}
-
 enum AppointmentStatus {
   upcoming
   completed
   cancelled
 }
 
+// apenas ignore essa aberração por enquanto
+
 model User {
   id            String        @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   image         String?
   email         String        @unique
-  role          String      @default("aluno")
   subtitle      String?
   createdAt     DateTime      @default(now())
   emailVerified DateTime?
-
+  activeProfile String        @default("aluno")
   monitor      Monitor?
   appointments Appointment[] @relation("StudentAppointments")
 
@@ -40,7 +36,7 @@ model Monitor {
   id            String            @id @default(auto()) @map("_id") @db.ObjectId
   userId        String            @unique @db.ObjectId
   subject       String
-  department    String
+  department    String?
   bio           String?
   rating        Float             @default(0)
   totalSessions Int               @default(0)
