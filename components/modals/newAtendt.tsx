@@ -1,6 +1,6 @@
 "use client"
 
-import { MonitorModal } from "@/app/(logged)/monitores/@newAtendt/(.)newAtendt/[id]/page"
+import { MonitorModal } from "@/types/monitor/monitorTypes";
 import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

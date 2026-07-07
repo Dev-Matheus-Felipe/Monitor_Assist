@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function Login(){
+    
     // caso o usuário esteja logado não permitir o re-login
     const session = await auth();
     if(session) redirect("/dashboard");

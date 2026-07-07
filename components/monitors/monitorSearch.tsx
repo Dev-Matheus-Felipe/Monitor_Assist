@@ -1,12 +1,12 @@
 "use client"
 
-import { MonitorWithSlots } from "@/app/(logged)/monitores/page";
-import { departments } from "@/lib/departments";
+import { departments } from "@/lib/generals";
 import { Search, Star } from "lucide-react";
 import { useState } from "react";
 import Monitor from "./monitor";
+import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 
-export default function MonitorSearch({monitores} : {monitores: MonitorWithSlots[]}){
+export default function MonitorSearch({monitores} : {monitores: MonitorWithAll[]}){
     // valor do input de pesquisa e o filtro por categoria
     const [search, setSearch] = useState("");
     const [dept, setDept] = useState("Todos");

@@ -1,15 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-import { Prisma } from "@prisma/client";
 import NewAtendtModal from "@/components/modals/newAtendt";
-
-export type MonitorModal = Prisma.MonitorGetPayload<{
-  include: {
-    appointments: true;
-    user: true
-  };
-}>;
+import { MonitorModal } from "@/types/monitor/monitorTypes";
 
 export default async function NewAtendiment({
   params,

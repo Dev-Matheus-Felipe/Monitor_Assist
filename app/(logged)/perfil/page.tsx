@@ -1,5 +1,7 @@
+import Horarios from "@/components/perfil/horarios";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -10,8 +12,9 @@ export  default async function MeuPerfilPage() {
   const session = await auth();
   if(!session?.user || session.user.activeProfile != "monitor") redirect("/dashboard");
   
-  const monitor = await prisma.monitor.findUnique({
-    where : {userId: session.user.id}
+  const monitor: MonitorWithSlots | null = await prisma.monitor.findUnique({
+    where : {userId: session.user.id},
+    include: {slots: true}
   });
   
   if(!monitor) redirect("/dashboard");
@@ -51,6 +54,8 @@ export  default async function MeuPerfilPage() {
         </div>
         <p className="text-sm text-foreground/70 mt-4 leading-relaxed border-t border-border pt-4">{monitor.bio}</p>
       </div>
+      
+      <Horarios monitor={monitor} />
     </div>
   );
 }

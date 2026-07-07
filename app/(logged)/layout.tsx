@@ -16,7 +16,7 @@ export default async function RootLayout({
     <div className="flex min-h-screen w-full flex-wrap max-lg:flex-col">
         <Sidebar user={session?.user} />
         <SessionProvider>
-          <div className="flex flex-1 p-[3%] max-sm:p-5">
+          <div className="flex flex-1 p-[3%] max-sm:p-5 overflow-y-auto h-screen">
             {children}
           </div>
         </SessionProvider>

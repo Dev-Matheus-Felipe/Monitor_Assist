@@ -3,22 +3,14 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation";
 
-import { Prisma } from "@prisma/client";
-
-export type MonitorWithSlots = Prisma.MonitorGetPayload<{
-  include: {
-    slots: true;
-    user: true;
-    appointments: true
-  };
-}>;
+import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 
 export default async function Monitores(){
   const session = await auth();
 
   if(session?.user.activeProfile == "monitor") redirect("/");
 
-  const monitores: MonitorWithSlots[] = await prisma.monitor.findMany({
+  const monitores: MonitorWithAll[] = await prisma.monitor.findMany({
     include: {slots: true, user: true, appointments: true}
   });
 

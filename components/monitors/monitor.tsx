@@ -1,9 +1,9 @@
-import { MonitorWithSlots } from "@/app/(logged)/monitores/page";
+import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Monitor({monitor} : {monitor: MonitorWithSlots}){
+export default function Monitor({monitor} : {monitor: MonitorWithAll}){
     return (
         <div 
             className="bg-card border border-border rounded-lg p-5 hover:shadow-md transition-shadow"
