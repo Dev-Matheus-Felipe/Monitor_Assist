@@ -10,13 +10,12 @@ export type MonitorWithAll = Prisma.MonitorGetPayload<{
   include: {
     slots: true;
     user: true;
-    appointments: true
   };
 }>;
 
 export type MonitorModal = Prisma.MonitorGetPayload<{
   include: {
-    appointments: true;
+    slots: true;
     user: true
   };
 }>;

@@ -51,7 +51,7 @@ model Monitor {
 model AvailableSlot {
   id          String        @id @default(auto()) @map("_id") @db.ObjectId
   monitorId   String        @db.ObjectId
-  date        DateTime
+  date        DateTime      
   isBooked    Boolean       @default(false)
   createdAt   DateTime      @default(now())
 

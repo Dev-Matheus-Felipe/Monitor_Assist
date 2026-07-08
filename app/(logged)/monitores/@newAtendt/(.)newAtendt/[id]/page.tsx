@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
-import NewAtendtModal from "@/components/modals/newAtendt";
+import NewAtendtModal from "@/components/modals/newMonitoria/newAtendt";
 import { MonitorModal } from "@/types/monitor/monitorTypes";
 
 export default async function NewAtendiment({
@@ -18,7 +18,7 @@ export default async function NewAtendiment({
     },
     
     include: {
-      appointments: true,
+      slots: {where: {isBooked: false}},
       user: true
     }
   });

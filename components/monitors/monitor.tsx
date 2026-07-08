@@ -39,7 +39,7 @@ export default function Monitor({monitor} : {monitor: MonitorWithAll}){
 
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
                 <span className="text-xs font-mono text-muted-foreground">
-                    {monitor.appointments.length} horários disponíveis
+                    {monitor.slots.length} horários disponíveis
                 </span>
 
                 <Link className={`px-4 py-1.5 bg-primary text-primary-foreground rounded text-sm cursor-pointer

@@ -11,7 +11,7 @@ export default async function Monitores(){
   if(session?.user.activeProfile == "monitor") redirect("/");
 
   const monitores: MonitorWithAll[] = await prisma.monitor.findMany({
-    include: {slots: true, user: true, appointments: true}
+    include: {slots: {where: {isBooked: false}}, user: true}
   });
 
   return (

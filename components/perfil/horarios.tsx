@@ -1,11 +1,11 @@
 "use client"
 
-import { diasSemana } from "@/lib/generals";
+import { ALL_TIMES } from "@/lib/generals";
 import { addNewSlots } from "@/lib/serverFunctions/addNewSlots";
 import { serverRemoveSlot } from "@/lib/serverFunctions/removeSlot";
-import { ALL_TIMES } from "@/lib/slots";
+import { getSlotsData, slotsDataType } from "@/lib/slots";
 import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
-import { Plus, Trash2, X } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -16,53 +16,9 @@ export type addNewSlotType = {
     message: string
 }
 
-// horário type organizado
-type slotsDataType = {
-    id: string[],
-    day: string,
-    time: string,
-    horarios: string[]
-}
-
-type Slots = {
-    id: string;
-    createdAt: Date;
-    monitorId: string;
-    date: Date;
-    isBooked: boolean;
-}
-
-
-// organizar os horários para um formato legível e aparentável
-function getSlotsData({slots} : {slots: Slots[]}){
-    let response: slotsDataType[] = [];
-    
-    // para cada horário disponível separar por dias onde cada dia mantém todos os horários disponíveis
-    for(const slot of slots){
-
-        // pega a data, dia da semana e horas do horário
-        const data = slot.date.toISOString().split("T")[0];
-        const day = diasSemana[slot.date.getDay()];
-        const hour = slot.date.toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit"
-        })
-
-        // procura se exstir algum horário nesse mesmo dia existente
-        const index = response.findIndex(e => e.time == data);
-
-
-        // se não existir cria uam nova caso contrário apenas salva no existente
-        if(index != -1){
-            response[index].horarios.push(hour);
-            response[index].id.push(slot.id);
-
-        } else 
-            response.push({id:[slot.id], day: day, time: data, horarios: [hour]});
-        
-    }
-
-    return response;
+// pegar data
+function getDate({date} : {date: Date}){
+    return date.toISOString().split("T")[0];
 }
 
 
@@ -76,21 +32,13 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
     const router = useRouter();
 
     useEffect(() => {
-        // pega o dia dps as horas com as especificações inseridas
-        const horarios = monitor.slots
-            .filter(
-                (slot) =>
-                    slot.date.toISOString().split("T")[0] === newDate
-            )
-            .map((slot) =>
-                slot.date.toLocaleTimeString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })
-            );
+        if(newDate && monitor.slots.find(e => getDate({date: e.date}) == newDate)){
+            setNewDate("");
+            alert("Data ja cadastrada");
+        }
+        
 
-        setNewTimes(horarios);
-    }, [newDate, monitor.slots]);
+    }, [newDate]);
 
     // adicionar novo horário 
     const addSlot = async() => {
@@ -144,7 +92,7 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
                     value={newDate}
                     onChange={(e) => setNewDate(e.target.value)}
                     type="date"
-                    className="px-3 py-2 rounded border border-border bg-input-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring/30"
+                    className=" cursor-pointer px-3 py-2 rounded border border-border bg-input-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring/30"
                     />
                 </div>
 
@@ -156,15 +104,15 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
                         const selected = newTimes.includes(t);
 
                         return (
-                        <button
-                            key={t}
-                            onClick={() => setNewTimes(prev => ([...prev, t])) }
-                            className={`px-3 py-1.5 rounded border font-mono text-xs transition-all disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer ${
-                            selected ? "bg-primary text-primary-foreground border-primary" : "border-border bg-card hover:border-primary/40"
-                            }`}
-                        >
-                            {t}
-                        </button>
+                            <button
+                                key={t}
+                                onClick={() => setNewTimes(prev => ([...prev, t])) }
+                                className={`px-3 py-1.5 rounded border font-mono text-xs transition-all disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer ${
+                                selected ? "bg-primary text-primary-foreground border-primary" : "border-border bg-card hover:border-primary/40"
+                                }`}
+                            >
+                                {t}
+                            </button>
                         );
                     })}
                     </div>
@@ -208,9 +156,12 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
                                     <div className="flex gap-3 mt-3">
                                         {
                                             s.horarios.map((e, index) => (
-                                                <div key={index} className={`flex items-center gap-1 px-2.5 py-1 rounded border font-mono text-xs 
-                                                border-border bg-muted text-muted-foreground`}>
-                                                    {e}
+                                                <div key={index} className={`flex items-center gap-1 px-2.5 py-1 rounded border 
+                                                font-mono text-xs  text-muted-foreground
+                                                ${e.isBooked 
+                                                    ? "bg-secondary/60 border-secondary text-secondary-foreground" 
+                                                    : "border-border bg-muted text-muted-foreground"}`}>
+                                                    {e.horario}
                                                 </div>
 
                                             ))
