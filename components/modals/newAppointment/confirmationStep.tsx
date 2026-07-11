@@ -3,7 +3,7 @@ import { diasSemana } from "@/lib/generals";
 import { Serverschedule } from "@/lib/serverFunctions/schedule";
 import { Dispatch, SetStateAction, useState } from "react"
 import { timeType } from "./newAtendt";
-import { useRouter } from "next/navigation";
+import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 
 function formatDate({selectedDate} : {selectedDate: string}){
     console.log(selectedDate);
@@ -23,23 +23,23 @@ export default function ConfirmationStep({
     setStep,
     selectedDate,
     selectedTime,
-    monitorId
+    monitorId,
+    setData
 } : {
     setStep: Dispatch<SetStateAction<number>>,
     selectedDate: string,
     selectedTime: timeType,
-    monitorId: string
+    monitorId: string,
+    setData: Dispatch<SetStateAction<MonitorWithAll | null>>
 }){
 
     const [topic, setTopic] = useState("");
-    const router = useRouter();
 
     const schedule = async() => {
         const result: addNewSlotType = await Serverschedule({selectedTime, topic, monitorId });
         alert(result.message);
-        router.back();
-
-
+        
+        setData(null);
     }
     
     return (

@@ -22,8 +22,8 @@ function getNavItems({role} : {role: "monitor" | "aluno"}){
 
     return [
         { id: "/dashboard", label: isMonitor ? "Painel" : "Início", icon: LayoutDashboard },
-        { id: isMonitor ? "/atendimentos" : "/monitores", label: isMonitor ? "Atendimentos" : "Monitores", icon: isMonitor ? ClipboardList : Users },
-        { id: isMonitor ? "/perfil"  : "/atendimentos", label: isMonitor ? "Meu perfil" : "Meus Atendimentos", icon: isMonitor ? Users :  ClipboardList},
+        { id: isMonitor ? "/appointments" : "/tutors", label: isMonitor ? "Atendimentos" : "Monitores", icon: isMonitor ? ClipboardList : Users },
+        { id: isMonitor ? "/perfil"  : "/appointments", label: isMonitor ? "Meu perfil" : "Meus Atendimentos", icon: isMonitor ? Users :  ClipboardList},
     ]
 }
 

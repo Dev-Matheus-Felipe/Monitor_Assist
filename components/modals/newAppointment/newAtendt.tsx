@@ -1,28 +1,28 @@
 "use client"
 
 import { getSlotsData, horarioType, slotsDataType } from "@/lib/slots";
-import { MonitorModal } from "@/types/monitor/monitorTypes";
+import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react"
+import { useContext, useState } from "react"
 import ConfirmationStep from "./confirmationStep";
+import { NewAppointmentContext } from "@/components/providers/newAppointmentProvider";
 
 export type timeType = {
     time: string,
     id: string
 }
 
-
-export default function NewAtendtModal({monitor} : {monitor: MonitorModal}){
+export default function NewAtendtModal({monitor} : {monitor: MonitorWithAll}){
     const [selectedDate, setSelectedDate] = useState<string>("");
     const [selectedTime, setSelectedTime] = useState<timeType>({time: "", id: ""});
     const [horarios, setHorarios] = useState<horarioType[]>([]);
     const [step, setStep] = useState<number>(1);
     
-    const router = useRouter();
-
     const slotsData: slotsDataType[] = getSlotsData({slots: monitor.slots});
+
+    const context = useContext(NewAppointmentContext);
+    if(!context) return null;
     
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -43,7 +43,7 @@ export default function NewAtendtModal({monitor} : {monitor: MonitorModal}){
                         </div>
                     </div>
 
-                    <button onClick={()=> router.back()} className="p-1 hover:bg-muted rounded transition-colors cursor-pointer">
+                    <button onClick={()=> context.setData(null) } className="p-1 hover:bg-muted rounded transition-colors cursor-pointer">
                         <X className="w-4 h-4 text-muted-foreground" />
                     </button>
                 </div>
@@ -130,6 +130,7 @@ export default function NewAtendtModal({monitor} : {monitor: MonitorModal}){
                             selectedDate={selectedDate}
                             selectedTime={selectedTime}
                             monitorId={monitor.id}
+                            setData={context.setData}
                         /> }
                 </div>
             </div>

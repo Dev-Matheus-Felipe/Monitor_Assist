@@ -1,41 +1,28 @@
-import AtendDashboard from "@/components/atendimentos/dashboard";
-import { auth } from "@/lib/auth";
+import { AppointmentType } from "@/types/appointments/appointmentsType";
+import AtendDashboard from "@/components/appointments/dashboard";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
-
-export type Atendimentostype = Prisma.AppointmentGetPayload<{
-  include: {
-    monitor: {
-      include: {
-        user: {
-          select: {
-            name: true
-          }
-        }
-      }
-    }
-  }
-}>;
+import { auth } from "@/lib/auth";
 
 export default async function Atendimentos() {
   const session = await auth();
   if(!session?.user) return null;
 
-  const appointments: Atendimentostype[] = await prisma.appointment.findMany({
+  const appointments: AppointmentType[] = await prisma.appointment.findMany({
     where: {studentId: session.user.id},
     include: {
-    monitor: {
-      include: {
-        user: {
-          select: {
-            name: true
-          }
+      student: {
+        select: {
+          name: true,
+        }
+      },
+      monitor: {
+        include: {
+          user: true
+          
         }
       }
-    }
   }
-  }) 
-
+  }); 
 
   return (
     <div className="w-full h-full">

@@ -3,7 +3,7 @@
 import { addNewSlotType } from "@/components/perfil/horarios";
 import { auth } from "../auth";
 import { prisma } from "../prisma";
-import { timeType } from "@/components/modals/newMonitoria/newAtendt";
+import { timeType } from "@/components/modals/newAppointment/newAtendt";
 
 export async function Serverschedule({
     selectedTime,

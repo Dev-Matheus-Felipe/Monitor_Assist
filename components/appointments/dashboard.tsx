@@ -1,20 +1,22 @@
 "use client"
 
-import { Atendimentostype } from "@/app/(logged)/atendimentos/page";
+import { AppointmentType } from "@/types/appointments/appointmentsType";
 import SingleAppointment from "./appointment";
 import { useState } from "react"
 
 const states: string[] = ["all", "upcoming", "completed", "cancelled"]
 
-export default function AtendDashboard({appointments} : {appointments: Atendimentostype[]}){
-    const [filter, setFilter] = useState("all");
+export default function AtendDashboard({appointments} : {appointments: AppointmentType[]}){
+    const [filter, setFilter] = useState<string>("all");
     
     return (
         <div className="flex flex-col gap-8 mt-7">
+
+            {/* FILTERS MAP */}
             <div className="flex gap-2 flex-wrap">
-                { states.map((f) => (
+                { states.map((f, index) => (
                     <button 
-                    key={f} 
+                    key={index + f} 
                     onClick={()=> setFilter(f)}
                     className={`px-3 py-1.5 rounded border text-sm font-mono transition-all cursor-pointer
                     ${filter == f 
@@ -26,11 +28,12 @@ export default function AtendDashboard({appointments} : {appointments: Atendimen
                 ))}
             </div>
 
+            {/* AGENDAMENTOS */}
             <div className="space-y-3">
                 { appointments
                     .filter(e => e.status == filter || filter == "all")
                     .map((apt) => (
-                        <SingleAppointment apt={apt} />
+                        <SingleAppointment apt={apt} key={apt.id} />
                     ))
                 }
             </div>

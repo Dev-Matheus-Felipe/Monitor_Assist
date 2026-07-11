@@ -1,10 +1,17 @@
-import { Atendimentostype } from "@/app/(logged)/atendimentos/page";
+import { ViewAppointmentContext } from "../providers/viewAppointmentProvider";
+import { AppointmentType } from "@/types/appointments/appointmentsType";
 import { ChevronRight } from "lucide-react";
+import { useContext } from "react";
 
-export default function SingleAppointment({apt} : {apt: Atendimentostype}){
-    
+export default function SingleAppointment({apt} : {apt: AppointmentType}){
+    const context = useContext(ViewAppointmentContext);
+    if(!context) return null;
+
     return (
-        <button key={apt.id} className={`w-full bg-card border rounded-lg p-5 text-left hover:shadow-md hover:border-primary/30 transition-all group ${apt.status === "cancelled" ? "border-border opacity-60" : "border-border"}`}>
+        <button 
+        onClick={() => context.setData(apt) }
+        className={`w-full bg-card border rounded-lg p-5 text-left hover:shadow-md hover:border-primary/30 cursor-pointer
+        transition-all group ${apt.status === "cancelled" ? "border-border opacity-60" : "border-border"}`}>
             <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3 flex-1 min-w-0">
                     <div className="flex-1 min-w-0">
@@ -24,8 +31,12 @@ export default function SingleAppointment({apt} : {apt: Atendimentostype}){
                         <p className="text-sm text-foreground/70 mt-2 line-clamp-1">{apt.topic}</p>
                     </div>
                 </div>
-
-                <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-1 group-hover:text-primary transition-colors" />
+                
+                {/* CLOSE BUTTON */}
+                <ChevronRight 
+                    onClick={() => context.setData(apt) }
+                    className={`w-4 h-4 text-muted-foreground shrink-0 mt-1 group-hover:text-primary 
+                    transition-colors cursor-pointer`} />
             </div>
         </button>
     )

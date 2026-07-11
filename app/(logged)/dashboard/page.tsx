@@ -73,7 +73,7 @@ export default async  function Home(){
                 <h1 className="text-2xl text-foreground leading-tight" style={{ fontFamily: "'Instrument Serif', serif" }}>
                   {session.user.name.split(" ")[0]}
                 </h1>   
-              </div>
+            </div>
 
               <Boxes data={data} />
         </div>

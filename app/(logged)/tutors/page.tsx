@@ -1,4 +1,4 @@
-import MonitorSearch from "@/components/monitors/monitorSearch";
+import MonitorSearch from "@/components/monitores/monitorSearch";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation";

@@ -2,11 +2,15 @@
 
 import { departments } from "@/lib/generals";
 import { Search, Star } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Monitor from "./monitor";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
+import { NewAppointmentContext } from "../providers/newAppointmentProvider";
 
 export default function MonitorSearch({monitores} : {monitores: MonitorWithAll[]}){
+    const context = useContext(NewAppointmentContext);
+    if(!context) return null;
+    
     // valor do input de pesquisa e o filtro por categoria
     const [search, setSearch] = useState("");
     const [dept, setDept] = useState("Todos");
@@ -46,7 +50,7 @@ export default function MonitorSearch({monitores} : {monitores: MonitorWithAll[]
                             (m.department ?? "").toLowerCase().includes(search.toLowerCase()) ))
 
                     .map((monitor) => (
-                        <Monitor key={monitor.id} monitor={monitor} /> ))
+                        <Monitor key={monitor.id} monitor={monitor} setData={context.setData} /> ))
                 }
             </div>
         </div>

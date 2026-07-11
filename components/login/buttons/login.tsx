@@ -4,6 +4,7 @@ import { ChevronRight, GraduationCap } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 export function LoginButton({userType} : {userType: string}){
+    
     // objeto responsável por exibir corretamente as informações de cada componente
     const user = {
         title: userType == "aluno" ? "Aluno" : "Monitor",

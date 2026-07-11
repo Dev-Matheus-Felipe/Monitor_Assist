@@ -1,13 +1,21 @@
+
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 
-export default function Monitor({monitor} : {monitor: MonitorWithAll}){
+export default function Monitor({
+    monitor,
+    setData
+} : {
+    monitor: MonitorWithAll,
+    setData: Dispatch<SetStateAction<MonitorWithAll | null>>
+}){
     return (
         <div 
             className="bg-card border border-border rounded-lg p-5 hover:shadow-md transition-shadow"
             key={monitor.id}>
+                
             <div className="flex items-start gap-4">
                 <Image
                     width={30} 
@@ -42,11 +50,11 @@ export default function Monitor({monitor} : {monitor: MonitorWithAll}){
                     {monitor.slots.length} horários disponíveis
                 </span>
 
-                <Link className={`px-4 py-1.5 bg-primary text-primary-foreground rounded text-sm cursor-pointer
+                <button className={`px-4 py-1.5 bg-primary text-primary-foreground rounded text-sm cursor-pointer
                 font-medium hover:opacity-90 transition-opacity flex items-center gap-1.5`}
-                href={`/monitores/newAtendt/${monitor.userId}`}>
+                onClick={() => setData(monitor) }>
                     Agendar
-                </Link>
+                </button>
             </div>
         </div>
     );
