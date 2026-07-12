@@ -23,7 +23,7 @@ function getNavItems({role} : {role: "monitor" | "aluno"}){
     return [
         { id: "/dashboard", label: isMonitor ? "Painel" : "Início", icon: LayoutDashboard },
         { id: isMonitor ? "/appointments" : "/tutors", label: isMonitor ? "Atendimentos" : "Monitores", icon: isMonitor ? ClipboardList : Users },
-        { id: isMonitor ? "/perfil"  : "/appointments", label: isMonitor ? "Meu perfil" : "Meus Atendimentos", icon: isMonitor ? Users :  ClipboardList},
+        { id: isMonitor ? "/profile"  : "/appointments", label: isMonitor ? "Meu perfil" : "Meus Atendimentos", icon: isMonitor ? Users :  ClipboardList},
     ]
 }
 

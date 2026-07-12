@@ -35,7 +35,6 @@ model User {
 model Monitor {
   id            String            @id @default(auto()) @map("_id") @db.ObjectId
   userId        String            @unique @db.ObjectId
-  subject       String
   department    String?
   bio           String?
   rating        Float             @default(0)
@@ -70,6 +69,7 @@ model Appointment {
   status     AppointmentStatus @default(upcoming)
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @updatedAt
+  date        DateTime      
 
   slot       AvailableSlot     @relation(fields: [slotId], references: [id])
   student    User              @relation("StudentAppointments", fields: [studentId], references: [id])

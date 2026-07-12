@@ -8,11 +8,13 @@ import { timeType } from "@/components/modals/newAppointment/newAtendt";
 export async function Serverschedule({
     selectedTime,
     topic,
-    monitorId
+    monitorId,
+    selectedDate
 } : {
     selectedTime: timeType
     topic: string
-    monitorId: string
+    monitorId: string,
+    selectedDate: string
 
 }):Promise<addNewSlotType> {
     const session = await auth();
@@ -25,12 +27,15 @@ export async function Serverschedule({
     if(!session?.user || !monitor) return {status: false, message: "Monitor e/ou usuário não reconhecido"};
 
     try {
+        const creationDate = new Date(`${selectedDate}T${selectedTime.time}`);
+
         await prisma.appointment.create({
             data: {
                 monitorId: monitorId,
                 studentId: session.user.id,
                 topic: topic,
-                slotId: selectedTime.id
+                slotId: selectedTime.id,
+                date: creationDate
             }
         }) 
 

@@ -6,12 +6,17 @@ import { GraduationCap, X } from "lucide-react";
 import { useSession } from "next-auth/react"
 import Image from "next/image";
 import { useContext } from "react";
+import { formatDate } from "../newAppointment/confirmationStep";
+import { diasSemana } from "@/lib/generals";
 
 export default function ViewAppointment({data} : {data: AppointmentType}){
     const context = useContext(ViewAppointmentContext);
     const {data: session } = useSession();
 
     if(!session || !context) return null;
+
+    const minutes = data.date.getMinutes() == 0 ? "00" : data.date.getMinutes();
+    const hours = data.date.getHours();
 
     return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -48,12 +53,16 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
                 <div className="grid grid-cols-2 gap-3">
                     <div className="bg-muted/50 rounded-lg p-3">
                         <p className="text-xs font-mono text-muted-foreground uppercase tracking-wide mb-1">Data</p>
-                        <p className="text-sm font-medium text-foreground capitalize">DATA HERE</p>
+                        <p className="text-sm font-medium text-foreground capitalize">
+                            {diasSemana[data.date.getDay()]} {data.date.toLocaleDateString("pt-BR")}
+                        </p>
                     </div>
 
                     <div className="bg-muted/50 rounded-lg p-3">
                         <p className="text-xs font-mono text-muted-foreground uppercase tracking-wide mb-1">Horário</p>
-                        <p className="text-sm font-medium text-foreground font-mono">DATA HERE</p>
+                        <p className="text-sm font-medium text-foreground font-mono">
+                            {`${hours}:${minutes}`}
+                        </p>
                     </div>
                 </div>
 
@@ -97,7 +106,7 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
 
                 <div className="flex items-center justify-between text-xs font-mono text-muted-foreground pt-1 border-t border-border">
                     <span>ID: {data.id}</span>
-                    <span>Criado em DATA</span>
+                    <span>Criado em {data.createdAt.toLocaleDateString()}</span>
                 </div>
             </div>
         </div>

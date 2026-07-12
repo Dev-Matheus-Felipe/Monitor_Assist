@@ -5,8 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 import { timeType } from "./newAtendt";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 
-function formatDate({selectedDate} : {selectedDate: string}){
-    console.log(selectedDate);
+export function formatDate({selectedDate} : {selectedDate: string}){
     const [year, month, day] = selectedDate.split("-").map(Number);
     const newDay = new Date(year, month - 1, day);
 
@@ -36,7 +35,7 @@ export default function ConfirmationStep({
     const [topic, setTopic] = useState("");
 
     const schedule = async() => {
-        const result: addNewSlotType = await Serverschedule({selectedTime, topic, monitorId });
+        const result: addNewSlotType = await Serverschedule({selectedTime, topic, monitorId, selectedDate});
         alert(result.message);
         
         setData(null);

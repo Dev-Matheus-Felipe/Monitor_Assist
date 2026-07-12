@@ -2,6 +2,10 @@ export const departments = [
     "Todos", "Matemática", "Física", "Ciências da Computação", "Química", "Estatística"
 ];
 
+export const departmentsProfile = [
+    "Matemática", "Física", "Ciências da Computação", "Química", "Estatística"
+];
+
 
 export const diasSemana = [
   "Domingo",

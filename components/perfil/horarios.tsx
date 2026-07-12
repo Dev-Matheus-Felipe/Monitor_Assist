@@ -63,18 +63,18 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
     const slotsData: slotsDataType[] = getSlotsData({slots: monitor.slots});
 
     return (    
-        <div className="bg-card border border-border rounded-lg p-6 mt-10">
+        <div className="bg-card border border-border rounded-lg p-6 mt-7">
 
             {/* HEADER*/}
             <div className="flex items-center justify-between mb-5">
-                <h3 className="font-medium text-foreground">Horários disponíveis</h3>
+                <h3 className="font-medium text-foreground  max-sm:text-sm">Horários disponíveis</h3>
                 {!adding && (
                 <button
                     onClick={() => setAdding(true)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 bg-primary cursor-pointer
                     text-primary-foreground rounded text-sm font-medium hover:opacity-90 transition-opacity`}
                 >
-                    <Plus className="w-3.5 h-3.5" />
+                    <Plus className="w-3.5 h-3.5 max-sm:w-3 max-sm:h-3" />
                     Adicionar dia
                 </button>
                 )}
