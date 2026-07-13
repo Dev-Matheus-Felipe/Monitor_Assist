@@ -1,4 +1,4 @@
-import { DataType } from "@/app/(logged)/dashboard/page";
+import { DataType } from "@/lib/home/getHomeData";
 
 export default function Boxes({data} : {data: DataType[]}){
     return (

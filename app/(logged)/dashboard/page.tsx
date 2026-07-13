@@ -23,7 +23,6 @@ export default async  function Home(){
         isMonitor: session.user.activeProfile == "monitor",
     });
 
-
     return (
         <div className="w-full h-full flex flex-col gap-8">
             <div>

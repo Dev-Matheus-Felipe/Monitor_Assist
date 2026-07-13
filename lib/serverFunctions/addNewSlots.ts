@@ -1,21 +1,21 @@
 "use server"
 
-import { addNewSlotType } from "@/components/perfil/horarios";
+import { ServerSideResponse } from "@/types/generals";
 import { auth } from "../auth"
 import { prisma } from "../prisma";
 
 // server function responsável pelo cadastramento de novos horários
-export async function addNewSlots({newDate, newTimes} : {newDate: string, newTimes: string[]}): Promise<addNewSlotType>{
+export async function addNewSlots({newDate, newTimes} : {newDate: string, newTimes: string[]}): Promise<ServerSideResponse>{
     
     // pega o monitor e o usuário logado em questão e verifica compatibilidade
     const session = await auth();
-    if(!session?.user) return {status: false, message: "Not logged!"};
+    if(!session?.user) return {status: false, message: "Not allowed!"};
 
     const monitor = await prisma.monitor.findUnique({
         where: {userId: session.user.id}
     })
 
-    if(!monitor) return {status: false, message: "Not logged!"};
+    if(!monitor) return {status: false, message: "Not allowed!"};
     
     // salva um objeto representando os horários que serão salvos
     const slots = newTimes.map(e => (
@@ -31,9 +31,9 @@ export async function addNewSlots({newDate, newTimes} : {newDate: string, newTim
             data: slots
         });
 
-        return {status: true, message: "Horário criado com sucesso!"};
+        return {status: true, message: "schedules created successfully."};
     } catch (error) {
 
-        return {status: false, message: "Algo deu errado, por favor tente novamente mais tarde!"}
+        return {status: false, message: "Internal databse error."}
     }
 }

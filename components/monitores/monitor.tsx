@@ -34,7 +34,6 @@ export default function Monitor({
                         </div>
                     </div>
 
-                    <p className="text-sm text-accent font-medium mt-0.5">{monitor.subject}</p>
                     <p className="text-xs text-muted-foreground font-mono mt-0.5">{monitor.department}</p>
 
                     <span className=" text-xs font-mono text-muted-foreground  flex items-end">

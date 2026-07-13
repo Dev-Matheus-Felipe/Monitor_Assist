@@ -27,7 +27,7 @@ export async function GET(
             await prisma.monitor.create({
                 data: {
                     userId: session.user.id,
-                    subject: "Undefined"
+                    department: "Undefined"
                 }
             });
         }

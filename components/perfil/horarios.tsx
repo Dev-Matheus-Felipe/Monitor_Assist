@@ -4,23 +4,18 @@ import { ALL_TIMES } from "@/lib/generals";
 import { addNewSlots } from "@/lib/serverFunctions/addNewSlots";
 import { serverRemoveSlot } from "@/lib/serverFunctions/removeSlot";
 import { getSlotsData, slotsDataType } from "@/lib/slots";
+import { ServerSideResponse } from "@/types/generals";
 import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast, Toaster } from "sonner";
 
-
-// response newSlot Type
-export type addNewSlotType = {
-    status: boolean,
-    message: string
-}
 
 // pegar data
 function getDate({date} : {date: Date}){
     return date.toISOString().split("T")[0];
 }
-
 
 export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
     const [adding, setAdding] = useState(false);
@@ -42,12 +37,15 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
 
     // adicionar novo horário 
     const addSlot = async() => {
-        const result: addNewSlotType = await addNewSlots({newDate, newTimes});
+        const result: ServerSideResponse = await addNewSlots({newDate, newTimes});
 
         if(result.status){
+            toast.success(result.message);
             router.refresh();
+            
             setAdding(false);
-        }
+        
+        } else toast.error(result.message);
     }
 
     // remover horário

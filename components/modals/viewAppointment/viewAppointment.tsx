@@ -6,7 +6,6 @@ import { GraduationCap, X } from "lucide-react";
 import { useSession } from "next-auth/react"
 import Image from "next/image";
 import { useContext } from "react";
-import { formatDate } from "../newAppointment/confirmationStep";
 import { diasSemana } from "@/lib/generals";
 
 export default function ViewAppointment({data} : {data: AppointmentType}){

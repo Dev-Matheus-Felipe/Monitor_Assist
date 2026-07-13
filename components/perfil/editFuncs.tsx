@@ -1,11 +1,15 @@
 "use client"
 
 import { departmentsProfile } from "@/lib/generals";
+import editProfile from "@/lib/serverFunctions/editProfile";
+import { editProfileSchema } from "@/lib/zod/editProfile";
 import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { ArrowDown, Pencil, Star } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type DepartamentType = {
     value: string,
@@ -24,6 +28,29 @@ export default function EditFuncsPage({
     const [bio, setBio] = useState<string>(monitor.bio ?? "");
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const router = useRouter();
+
+    const edit = async() => {
+        // valida os dados
+        const valid = editProfileSchema.safeParse({department: department.value, bio});
+
+        if(!valid.success){
+            toast.error(valid.error.issues[0].message);
+            return;
+        }
+
+        // edita o perfil e gerencia o retorno dado pela função
+        const response = await editProfile({department: department.value, bio});
+        
+        if(response.status){
+            setIsEditing(false);
+
+            toast.success(response.message);
+            router.refresh();
+        
+        } else toast.error(response.message);
+
+    }
 
     return (
         <div className="bg-card border border-border rounded-lg p-6 mt-6 relative flex flex-col">
@@ -104,7 +131,8 @@ export default function EditFuncsPage({
             { isEditing &&
                 <div className="w-full flex justify-start">
                     <button className={`bg-primary mt-5 text-white px-3 py-1.5 rounded text-sm 
-                    cursor-pointer hover:opacity-90 transition-opacity`}>
+                    cursor-pointer hover:opacity-90 transition-opacity`}
+                    onClick={() => edit()}>
                         Confirmar
                     </button>
                 </div>

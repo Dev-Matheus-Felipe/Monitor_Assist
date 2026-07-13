@@ -1,9 +1,10 @@
-import { addNewSlotType } from "@/components/perfil/horarios";
 import { diasSemana } from "@/lib/generals";
 import { Serverschedule } from "@/lib/serverFunctions/schedule";
 import { Dispatch, SetStateAction, useState } from "react"
 import { timeType } from "./newAtendt";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
+import { ServerSideResponse } from "@/types/generals";
+import { toast } from "sonner";
 
 export function formatDate({selectedDate} : {selectedDate: string}){
     const [year, month, day] = selectedDate.split("-").map(Number);
@@ -35,9 +36,11 @@ export default function ConfirmationStep({
     const [topic, setTopic] = useState("");
 
     const schedule = async() => {
-        const result: addNewSlotType = await Serverschedule({selectedTime, topic, monitorId, selectedDate});
-        alert(result.message);
-        
+        const result: ServerSideResponse = await Serverschedule({selectedTime, topic, monitorId, selectedDate});
+
+        if(result.status) toast.success(result.message);
+        else toast.error(result.message);
+
         setData(null);
     }
     

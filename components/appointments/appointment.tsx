@@ -26,7 +26,7 @@ export default function SingleAppointment({apt} : {apt: AppointmentType}){
                             </span>
                         </div>
 
-                        <p className="text-sm text-accent font-medium mt-0.5">{apt.monitor.subject}</p>
+                        <p className="text-sm text-accent font-medium mt-0.5">{apt.monitor.bio}</p>
                         <p className="text-xs font-mono text-muted-foreground mt-1">Date {apt.date.toLocaleDateString()}</p>
                         <p className="text-sm text-foreground/70 mt-2 line-clamp-1">{apt.topic}</p>
                     </div>

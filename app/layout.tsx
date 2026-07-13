@@ -2,6 +2,11 @@ import { ViewAppointmentProvider } from "@/components/providers/viewAppointmentP
 import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import { NewAppointmentProvider } from "@/components/providers/newAppointmentProvider";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export default function RootLayout({
   children,
@@ -9,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", inter.variable)}>
       <body className="min-h-full flex flex-col">
         <SessionProvider>
           <ViewAppointmentProvider>
@@ -18,6 +23,8 @@ export default function RootLayout({
             </NewAppointmentProvider>
           </ViewAppointmentProvider>
         </SessionProvider>
+
+        <Toaster />
       </body>
     </html>
   );

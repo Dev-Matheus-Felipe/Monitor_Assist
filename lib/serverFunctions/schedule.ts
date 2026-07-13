@@ -1,6 +1,6 @@
 "use server"
 
-import { addNewSlotType } from "@/components/perfil/horarios";
+import { ServerSideResponse } from "@/types/generals";
 import { auth } from "../auth";
 import { prisma } from "../prisma";
 import { timeType } from "@/components/modals/newAppointment/newAtendt";
@@ -16,15 +16,15 @@ export async function Serverschedule({
     monitorId: string,
     selectedDate: string
 
-}):Promise<addNewSlotType> {
+}):Promise<ServerSideResponse> {
     const session = await auth();
 
+    // procura o monitor e o valida 
     const monitor = await prisma.monitor.findUnique({
-        where: {
-            id: monitorId
-        }
+        where: { id: monitorId }
     })
-    if(!session?.user || !monitor) return {status: false, message: "Monitor e/ou usuário não reconhecido"};
+
+    if(!session?.user || !monitor) return {status: false, message: "Unrecognized monitor and/or user!"};
 
     try {
         const creationDate = new Date(`${selectedDate}T${selectedTime.time}`);
@@ -44,9 +44,9 @@ export async function Serverschedule({
             data: {isBooked: true}
         })
         
-        return {status: true, message: "deu certto"};
+        return {status: true, message: "Appointment successfully scheduled."};
 
     } catch (error) {
-        return {status: false, message: "deu errado"};
+        return {status: false, message: "Interal databse error."};
     }
 }
