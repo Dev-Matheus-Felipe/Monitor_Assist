@@ -40,7 +40,7 @@ export default function NewAtendtModal({monitor} : {monitor: MonitorWithAll}){
                             />
                         <div>
                             <p className="font-medium text-foreground">{monitor.user.name}</p>
-                            <p className="text-sm text-muted-foreground">{monitor.subject}</p>
+                            <p className="text-sm text-muted-foreground">{monitor.department}</p>
                         </div>
                     </div>
 

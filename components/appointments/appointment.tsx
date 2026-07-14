@@ -11,7 +11,7 @@ export default function SingleAppointment({apt} : {apt: AppointmentType}){
         <button 
         onClick={() => context.setData(apt) }
         className={`w-full bg-card border rounded-lg p-5 text-left hover:shadow-md hover:border-primary/30 cursor-pointer
-        transition-all group ${apt.status === "cancelled" ? "border-border opacity-60" : "border-border"}`}>
+        transition-all group border-border`}>
             <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3 flex-1 min-w-0">
                     <div className="flex-1 min-w-0">

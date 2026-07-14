@@ -5,6 +5,7 @@ import { timeType } from "./newAtendt";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { ServerSideResponse } from "@/types/generals";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function formatDate({selectedDate} : {selectedDate: string}){
     const [year, month, day] = selectedDate.split("-").map(Number);
@@ -34,12 +35,16 @@ export default function ConfirmationStep({
 }){
 
     const [topic, setTopic] = useState("");
+    const router = useRouter();
 
     const schedule = async() => {
         const result: ServerSideResponse = await Serverschedule({selectedTime, topic, monitorId, selectedDate});
 
-        if(result.status) toast.success(result.message);
-        else toast.error(result.message);
+        if(result.status){
+            toast.success(result.message);
+            router.refresh();
+            
+        } else toast.error(result.message);
 
         setData(null);
     }

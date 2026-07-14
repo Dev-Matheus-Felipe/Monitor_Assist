@@ -31,7 +31,10 @@ export default async function Atendimentos() {
         <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Meus atendimentos</h1>
       </div>
 
-      <AtendDashboard appointments={appointments} />
+      {appointments.length > 0 
+        ? <AtendDashboard appointments={appointments} />
+        : <p className="text-sm mt-2 text-muted-foreground">Você não tem nenhum atendimento agendado.</p>
+      }
     </div>
   );
 }

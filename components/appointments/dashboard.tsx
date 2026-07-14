@@ -4,7 +4,7 @@ import { AppointmentType } from "@/types/appointments/appointmentsType";
 import SingleAppointment from "./appointment";
 import { useState } from "react"
 
-const states: string[] = ["all", "upcoming", "completed", "cancelled"]
+const states: string[] = ["all", "upcoming", "completed"]
 
 export default function AtendDashboard({appointments} : {appointments: AppointmentType[]}){
     const [filter, setFilter] = useState<string>("all");

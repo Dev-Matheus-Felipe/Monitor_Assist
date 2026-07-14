@@ -3,8 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
+  // Next.js 16
+  cacheComponents: true,
+
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
+    ],
   },
 
   async redirects() {

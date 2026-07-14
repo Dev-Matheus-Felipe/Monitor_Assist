@@ -5,6 +5,7 @@ import { NewAppointmentProvider } from "@/components/providers/newAppointmentPro
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
+import { Suspense } from "react";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -19,7 +20,9 @@ export default function RootLayout({
         <SessionProvider>
           <ViewAppointmentProvider>
             <NewAppointmentProvider>
-              {children}
+              <Suspense>
+                {children}
+              </Suspense>
             </NewAppointmentProvider>
           </ViewAppointmentProvider>
         </SessionProvider>
