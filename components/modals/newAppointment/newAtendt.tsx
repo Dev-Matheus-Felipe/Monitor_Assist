@@ -27,7 +27,7 @@ export default function NewAtendtModal({monitor} : {monitor: MonitorWithAll}){
     
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-foreground/40 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" />
                 <div className="relative bg-card border border-border rounded-lg shadow-2xl w-full max-w-lg">
                     <div className="flex items-start justify-between p-6 border-b border-border">
                         <div className="flex items-center gap-3">

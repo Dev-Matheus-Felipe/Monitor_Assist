@@ -44,13 +44,13 @@ export default function Sidebar({user} : {user: User}) {
     return (
         <>
             {/* BLUR DO MOBILE */}
-            <div className={`min-w-screen h-screen fixed inset-0 bg-black/50 backdrop-blur-md z-5 ${!mobileMenu && "hidden"}`} 
+            <div className={`w-screen h-screen top-0 aboslute left-0 ${mobileMenu ? "fixed" : "hidden"} bg-transparent z-1`} 
             onClick={()=> setMobileMenu(false)} />
 
             {/* SIDEBAR DO DESKTOP */}
             <aside
-                className={`w-64 bg-sidebar flex flex-col transition-transform duration-500 z-20 min-h-screen
-                lg:translate-x-0 -translate-x-full lg:relative absolute ${mobileMenu && "translate-x-0"}`}>
+                className={`w-64 bg-sidebar flex flex-col transition-transform duration-500 z-20 h-screen
+                lg:translate-x-0 -translate-x-full lg:relative fixed ${mobileMenu && "translate-x-0"}`}>
 
                 {/* HEADER */}
                 <div className="px-6 py-6 border-b border-sidebar-border">

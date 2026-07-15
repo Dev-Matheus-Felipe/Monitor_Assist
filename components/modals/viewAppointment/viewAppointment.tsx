@@ -56,7 +56,7 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
 
     return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-foreground/40 backdrop-blur-sm" onClick={() => context.setData(null)} />
+        <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" onClick={() => context.setData(null)} />
         <div className="relative bg-card border border-border rounded-lg shadow-2xl w-full max-w-md overflow-hidden">
             <div className="bg-primary px-6 py-5">
                 <div className="flex items-start justify-between">
@@ -189,8 +189,8 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
 
                         : <button 
                             onClick={() => cancelAppoitment()}
-                            className={`text-[13px] mt-1 px-1.5 py-1.5 cursor-pointer bg-red-500 hover:bg-red-400 
-                            text-white rounded`}>
+                            className={`text-[13px] mt-1 px-1.5 py-1.5 cursor-pointer border border-red-500
+                            hover:border-red-800 hover:text-red-800 text-red-500 rounded`}>
                             Cancelar
                         </button>
                     }

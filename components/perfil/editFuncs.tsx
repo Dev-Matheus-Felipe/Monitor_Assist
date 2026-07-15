@@ -125,6 +125,7 @@ export default function EditFuncsPage({
                     className={`border border-primary w-full mt-5 text-sm px-3 py-3 h-20 resize-none`}
                     value={bio} 
                     maxLength={250}
+                    placeholder="Edite sua descrição aqui..."
                     onChange={(e) => setBio(e.target.value)} />
             }
 

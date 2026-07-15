@@ -11,8 +11,8 @@ export default function MobilenNavbar({
     setMobileMenu: Dispatch<SetStateAction<boolean>>
 }){
     return (
-        <header className={`lg:hidden sticky top-0 z-10 px-4 py-3 flex items-center 
-        justify-between border-b border-sidebar-border ${mobileMenu ? "bg-[#143024]" : "bg-sidebar"}`}>
+        <header className={`lg:hidden sticky top-0 z-10 px-4 py-3 flex items-center mb-3
+        justify-between border-b border-sidebar-border bg-sidebar`}>
             <button onClick={() => setMobileMenu(true)} className="p-2 text-sidebar-foreground">
                 <BookOpen className="w-5 h-5" />
             </button>
