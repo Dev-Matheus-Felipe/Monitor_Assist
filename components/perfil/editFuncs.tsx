@@ -54,13 +54,13 @@ export default function EditFuncsPage({
 
     return (
         <div className="bg-card border border-border rounded-lg p-6 mt-6 relative flex flex-col">
-            <button className={`absolute right-5 top-5 px-2 py-2 max-sm:px-1.5 max-sm:py-1.5 bg-primary cursor-pointer  
+            <button className={`absolute right-2 top-2 px-2 py-2 max-sm:px-1.5 max-sm:py-1.5 bg-primary cursor-pointer  
             text-primary-foreground rounded hover:opacity-90 transition-opacity font-medium`}
             onClick={()=> setIsEditing(prev => !prev)}>
                 <Pencil size={12} />
             </button>
 
-            <div className="flex items-start gap-5">
+            <div className="flex items-start gap-5 mt-2">
                 <Image
                     src={user.image ?? ""} 
                     alt="Monitor Image" 
@@ -117,7 +117,7 @@ export default function EditFuncsPage({
             </div>
             
             { !isEditing 
-                ? <p className="text-sm text-foreground/70 mt-4 leading-relaxed border-t border-border pt-4 break-all">
+                ? <p className="text-sm text-foreground/70 mt-4 leading-relaxed border-t border-border pt-4 break-words">
                     {monitor.bio}
                 </p>
 

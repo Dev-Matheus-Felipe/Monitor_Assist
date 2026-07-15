@@ -44,7 +44,7 @@ export default function Sidebar({user} : {user: User}) {
     return (
         <>
             {/* BLUR DO MOBILE */}
-            <div className={`w-screen h-screen fixed inset-0 bg-black/50 backdrop-blur-md z-5 ${!mobileMenu && "hidden"}`} 
+            <div className={`min-w-screen h-screen fixed inset-0 bg-black/50 backdrop-blur-md z-5 ${!mobileMenu && "hidden"}`} 
             onClick={()=> setMobileMenu(false)} />
 
             {/* SIDEBAR DO DESKTOP */}

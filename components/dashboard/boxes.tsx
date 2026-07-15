@@ -2,7 +2,7 @@ import { DataType } from "@/lib/home/getHomeData";
 
 export default function Boxes({data} : {data: DataType[]}){
     return (
-        <div className="grid grid-cols-3 gap-4 max-sm:gap-2">
+        <div className="grid grid-cols-3 gap-4 max-sm:gap-1">
             {
                 data.map(({ label, value, icon: Icon }) => (
                     <div key={label} className="bg-card border border-border rounded-lg p-4 max-sm:p-2">

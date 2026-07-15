@@ -20,7 +20,7 @@ export default function RootLayout({
         <SessionProvider>
           <ViewAppointmentProvider>
             <NewAppointmentProvider>
-              <Suspense>
+              <Suspense fallback={<p>LOADING...</p>}>
                 {children}
               </Suspense>
             </NewAppointmentProvider>

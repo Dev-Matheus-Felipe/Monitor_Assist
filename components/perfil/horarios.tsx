@@ -9,7 +9,7 @@ import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 
 
 // pegar data
@@ -28,11 +28,10 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
 
     useEffect(() => {
         if(newDate && monitor.slots.find(e => getDate({date: e.date}) == newDate)){
+            toast.error("Date already scheduled");
             setNewDate("");
-            alert("Data ja cadastrada");
         }
         
-
     }, [newDate]);
 
     // adicionar novo horário 
@@ -151,19 +150,16 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
                                         {s.time.split("T")[0]}
                                     </p>
 
-                                    <div className="flex gap-3 mt-3">
-                                        {
-                                            s.horarios.map((e, index) => (
-                                                <div key={index} className={`flex items-center gap-1 px-2.5 py-1 rounded border 
-                                                font-mono text-xs  text-muted-foreground
-                                                ${e.isBooked 
-                                                    ? "bg-secondary/60 border-secondary text-secondary-foreground" 
-                                                    : "border-border bg-muted text-muted-foreground"}`}>
-                                                    {e.horario}
-                                                </div>
-
-                                            ))
-                                        }
+                                    <div className="flex flex-wrap gap-3 mt-3">
+                                        {s.horarios.map((e, index) => (
+                                            <div key={index} className={`flex items-center gap-1 px-2.5 py-1 rounded border 
+                                            font-mono text-xs text-muted-foreground
+                                            ${e.isBooked 
+                                                ? "bg-secondary/60 border-secondary text-secondary-foreground" 
+                                                : "border-border bg-muted text-muted-foreground"}`}>
+                                                {e.horario}
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
