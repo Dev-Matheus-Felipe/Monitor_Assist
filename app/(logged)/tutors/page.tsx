@@ -1,14 +1,8 @@
 import MonitorSearch from "@/components/monitores/monitorSearch";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma"
-import { redirect } from "next/navigation";
-
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
+import { prisma } from "@/lib/prisma"
 
 export default async function Monitores(){
-  const session = await auth();
-
-  if(session?.user.activeProfile == "monitor") redirect("/");
 
   const monitores: MonitorWithAll[] = await prisma.monitor.findMany({
     include: {slots: {where: {isBooked: false}}, user: true}

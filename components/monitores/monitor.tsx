@@ -1,4 +1,3 @@
-
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { Star } from "lucide-react";
 import Image from "next/image";

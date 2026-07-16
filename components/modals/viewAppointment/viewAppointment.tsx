@@ -1,17 +1,16 @@
 "use client"
 
-import { ViewAppointmentContext } from "@/components/providers/viewAppointmentProvider";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
 import { ChevronDown, ChevronRight, ChevronUp, GraduationCap, X } from "lucide-react";
-import { useSession } from "next-auth/react"
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { Dispatch, useState } from "react";
 import { diasSemana } from "@/lib/generals";
 import { ServerSideResponse } from "@/types/generals";
 import serverCancelAppoitment from "@/lib/serverFunctions/cancelAppoitment";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { ServerEditAppoitment } from "@/lib/serverFunctions/editAppoitment";
+import { useSession } from "next-auth/react";
 
 type AppoitmentStatusType = {
     isEditing: boolean,
@@ -20,24 +19,29 @@ type AppoitmentStatusType = {
 
 const statuses = ["upcoming", "completed"] as const;
 
-export default function ViewAppointment({data} : {data: AppointmentType}){
+export default function ViewAppointment({
+    data,
+    setData
+} : {
+    data: AppointmentType,
+    setData: Dispatch<React.SetStateAction<AppointmentType | null>>
+}){
+
     const [status, setStatus] = useState<AppoitmentStatusType>({isEditing: false, status: data.status});
-    const context = useContext(ViewAppointmentContext);
+    const {data: session} = useSession();
+    const router = useRouter();
 
-    const {data: session } = useSession();
-
-    if(!session || !context) return null;
+    if(!session) return null;
 
     const minutes = data.date.getMinutes() == 0 ? "00" : data.date.getMinutes();
     const hours = data.date.getHours();
-
-    const router = useRouter();
 
     const cancelAppoitment = async() => {
         const response: ServerSideResponse = await serverCancelAppoitment({id: data.id});
         if(response.status){
             toast.success(response.message);
-            context.setData(null);
+            setData(null);
+            
             router.refresh();
 
         } else toast.error(response.message);
@@ -56,7 +60,7 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
 
     return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" onClick={() => context.setData(null)} />
+        <div className="absolute inset-0 bg-background/40 backdrop-blur-sm" onClick={() => setData(null)} />
         <div className="relative bg-card border border-border rounded-lg shadow-2xl w-full max-w-md overflow-hidden">
             <div className="bg-primary px-6 py-5">
                 <div className="flex items-start justify-between">
@@ -75,7 +79,7 @@ export default function ViewAppointment({data} : {data: AppointmentType}){
                     </div>
 
                     <button 
-                        onClick={() => context.setData(null)} 
+                        onClick={() => setData(null)} 
                         className={`p-1 text-primary-foreground/60 hover:text-primary-foreground transition-colors 
                         mt-0.5 cursor-pointer`}>
                         <X className="w-4 h-4" />

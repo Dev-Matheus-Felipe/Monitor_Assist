@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   // Next.js 16
   cacheComponents: true,
 
-  images: {
+  images: {    
     remotePatterns: [
       {
         protocol: "https",

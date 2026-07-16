@@ -1,7 +1,7 @@
 "use client"
 
 import { departments } from "@/lib/generals";
-import { Search, Star } from "lucide-react";
+import { Search } from "lucide-react";
 import { useContext, useState } from "react";
 import Monitor from "./monitor";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";

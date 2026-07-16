@@ -2,6 +2,7 @@
 
 import ViewAppointment from "../modals/viewAppointment/viewAppointment";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
+import { SessionProvider } from "next-auth/react";
 import { createContext, useState } from "react";
 
 type ViewAppointmentContextType = {
@@ -15,7 +16,12 @@ export function ViewAppointmentProvider({children}: {children: React.ReactNode})
 
   return (
     <ViewAppointmentContext.Provider value={{ setData }}>
-      {data && <ViewAppointment data={data} />}
+      { data && 
+        <SessionProvider>
+          <ViewAppointment data={data} setData={setData} />
+        </SessionProvider>
+      }
+
       {children}
     </ViewAppointmentContext.Provider>
   );

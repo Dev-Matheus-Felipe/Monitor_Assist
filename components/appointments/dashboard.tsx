@@ -6,7 +6,12 @@ import { useState } from "react"
 
 const states: string[] = ["all", "upcoming", "completed"]
 
-export default function AtendDashboard({appointments} : {appointments: AppointmentType[]}){
+export default function AtendDashboard({
+    appointments,
+} : {
+    appointments: AppointmentType[],
+}){
+
     const [filter, setFilter] = useState<string>("all");
     
     return (
@@ -33,7 +38,7 @@ export default function AtendDashboard({appointments} : {appointments: Appointme
                 { appointments
                     .filter(e => e.status == filter || filter == "all")
                     .map((apt) => (
-                        <SingleAppointment apt={apt} key={apt.id} />
+                        <SingleAppointment apt={apt} key={apt.id}/>
                     ))
                 }
             </div>

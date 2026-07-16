@@ -8,6 +8,7 @@ export default function NextAptHome({
     homeData: HomeDataType,
     activeProfile: string
 }){
+    
     return (
         <div className="bg-primary text-primary-foreground rounded-lg p-5">
             <p className="text-xs font-mono uppercase tracking-widest opacity-70 mb-3">Próximo atendimento</p>

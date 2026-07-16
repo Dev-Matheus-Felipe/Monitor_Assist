@@ -13,9 +13,10 @@ export default function QuickAcess({isMonitor} : {isMonitor: boolean}){
             <div className="grid grid-cols-2 gap-3">
                 {acess.map(({ label, desc, icon: Icon, target }) => (
                 <Link 
-                href={target}
-                key={label}  
-                className="bg-card border border-border rounded-lg p-4 text-left hover:border-primary/40 hover:shadow-sm transition-all">
+                    href={target}
+                    key={label}  
+                    className="bg-card border border-border rounded-lg p-4 text-left hover:border-primary/40 hover:shadow-sm transition-all"
+                >
                     <Icon className="w-5 h-5 text-accent mb-2" />
                     <p className="font-medium text-sm text-foreground">{label}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{desc}</p>

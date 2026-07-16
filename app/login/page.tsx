@@ -1,14 +1,7 @@
 import { LoginButton } from "@/components/login/buttons/login";
-import { auth } from "@/lib/auth";
 import { BookOpen } from "lucide-react";
-import { redirect } from "next/navigation";
 
 export default async function Login(){
-
-    const session = await auth();
-
-    if(session) redirect("/dashboard");
-
     return (
         <div className="w-full h-screen flex flex-col items-center justify-center px-4">
 
@@ -42,7 +35,6 @@ export default async function Login(){
                 <LoginButton userType="monitor" />
 
             </div>
-
         </div>
     )
 }

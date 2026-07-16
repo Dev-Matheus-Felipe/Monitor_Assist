@@ -1,13 +1,9 @@
 import { ViewAppointmentProvider } from "@/components/providers/viewAppointmentProvider";
-import { SessionProvider } from "next-auth/react";
-import "./globals.css";
 import { NewAppointmentProvider } from "@/components/providers/newAppointmentProvider";
-import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
+import "./globals.css";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export default function RootLayout({
   children,
@@ -15,9 +11,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
-      <body className="min-h-full flex flex-col">
-        <SessionProvider>
+    <html lang="en">
+      <body className="h-screen flex flex-col">
           <ViewAppointmentProvider>
             <NewAppointmentProvider>
               <Suspense fallback={<p>LOADING...</p>}>
@@ -25,8 +20,6 @@ export default function RootLayout({
               </Suspense>
             </NewAppointmentProvider>
           </ViewAppointmentProvider>
-        </SessionProvider>
-
         <Toaster />
       </body>
     </html>

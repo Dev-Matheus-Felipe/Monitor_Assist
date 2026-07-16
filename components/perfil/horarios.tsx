@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-
 // pegar data
 function getDate({date} : {date: Date}){
     return date.toISOString().split("T")[0];

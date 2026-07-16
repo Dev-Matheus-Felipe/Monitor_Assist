@@ -4,10 +4,8 @@ import { BookOpen } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 export default function MobilenNavbar({
-    mobileMenu,
     setMobileMenu
 } : {
-    mobileMenu: boolean,
     setMobileMenu: Dispatch<SetStateAction<boolean>>
 }){
     return (
@@ -20,6 +18,7 @@ export default function MobilenNavbar({
             <p className="text-sidebar-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>
                 AtendeMonitor
             </p>
+            
             <div className="w-9" />
         </header>
     );

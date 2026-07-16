@@ -1,6 +1,7 @@
 import { DataType } from "@/lib/home/getHomeData";
 
 export default function Boxes({data} : {data: DataType[]}){
+    
     return (
         <div className="grid grid-cols-3 gap-4 max-sm:gap-1">
             {

@@ -12,7 +12,7 @@ export default async function RootLayout({
   if(!session?.user) redirect("/login");
 
   return (
-    <div className="flex min-h-screen w-full flex-wrap max-lg:flex-col">
+    <div className="flex h-screen w-full flex-wrap max-lg:flex-col">
       <Sidebar user={session?.user} />
       <div className="flex flex-1 p-[2%] max-sm:p-2 overflow-y-auto h-screen">
         {children}

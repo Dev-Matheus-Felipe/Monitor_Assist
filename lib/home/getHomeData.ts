@@ -14,9 +14,7 @@ export type DataType = {
 // forneçe as informações principais corretamentes baseada no login em monitor e aluno,
 export async function getHomeData({user, isMonitor} : {user: Session["user"], isMonitor: boolean}): Promise<HomeDataType>{
     const monitor = await prisma.monitor.findUnique({
-        where : {
-            userId: user.id
-        }
+        where : { userId: user.id }
     });
     
     // data que será mapeado na tela

@@ -106,7 +106,7 @@ export default function Sidebar({user} : {user: User}) {
             </aside>
                         
             {/* NAVBAR DO MOBILE */}
-            <MobilenNavbar mobileMenu={mobileMenu} setMobileMenu={setMobileMenu} />
+            <MobilenNavbar setMobileMenu={setMobileMenu} />
         </>
     );
 }
