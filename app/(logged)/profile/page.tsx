@@ -5,6 +5,14 @@ import { prisma } from "@/lib/prisma";
 import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { redirect } from "next/navigation";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | Atende Monitor",
+  description:
+    "Manage your personal information and monitor profile settings.",
+};
+
 export  default async function MeuPerfilPage() {
   
   // se eu não for monitor não sou permitido ver perfil

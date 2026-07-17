@@ -1,5 +1,12 @@
 import { LoginButton } from "@/components/login/buttons/login";
 import { BookOpen } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login | Atende Monitor",
+  description:
+    "Sign in to Atende Monitor to manage tutoring appointments as a student or monitor.",
+};
 
 export default async function Login(){
     return (

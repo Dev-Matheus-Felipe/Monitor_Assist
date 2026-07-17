@@ -117,7 +117,7 @@ export default function EditFuncsPage({
             </div>
             
             { !isEditing 
-                ? <p className="text-sm text-foreground/70 mt-4 leading-relaxed border-t border-border pt-4 break-words">
+                ? <p className="text-sm text-foreground/70 mt-4 leading-relaxed border-t border-border pt-4 wrap-break-word">
                     {monitor.bio}
                 </p>
 

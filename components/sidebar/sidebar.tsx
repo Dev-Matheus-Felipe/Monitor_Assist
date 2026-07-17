@@ -4,7 +4,7 @@ import { BookOpen, ClipboardList, LayoutDashboard, LogOut, LucideIcon, Users } f
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import MobilenNavbar from "./mobileNavbar";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Navegation from "./navegation";
 import { User } from "next-auth";
 import Image from "next/image";
@@ -27,18 +27,23 @@ function getNavItems({role} : {role: "monitor" | "aluno"}){
     ]
 }
 
-export default function Sidebar({user} : {user: User}) {
+export default function Sidebar() {
+    const {data: session} = useSession();
+    
     const [activeView, setActiveView] = useState<string>("/dashboard");
     const [mobileMenu, setMobileMenu] = useState<boolean>(false);
-
+    
     // track o path para colorir os items na navegação corretamente
     const pathname = usePathname().split("/")[1];
-
+    const user = session?.user;
+    
     useEffect(() => {
         setActiveView("/" + pathname);
     }, [pathname]);
-
+    
     // items de navegação para a redenrização
+    if(!user) return null;
+
     const navItems: NavItemsType[] = getNavItems({role: user.activeProfile});
     
     return (
