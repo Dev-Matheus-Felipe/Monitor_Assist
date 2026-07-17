@@ -16,13 +16,12 @@ export function ViewAppointmentProvider({children}: {children: React.ReactNode})
 
   return (
     <ViewAppointmentContext.Provider value={{ setData }}>
-      { data && 
-        <SessionProvider>
-          <ViewAppointment data={data} setData={setData} />
-        </SessionProvider>
-      }
+      <SessionProvider>
+        { data && 
+            <ViewAppointment data={data} setData={setData} /> }
 
-      {children}
+        {children}
+      </SessionProvider>
     </ViewAppointmentContext.Provider>
   );
 }
