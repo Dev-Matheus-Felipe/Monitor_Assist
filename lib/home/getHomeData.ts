@@ -1,33 +1,37 @@
 import { Calendar, CircleCheckBig, Clock, LucideIcon, User } from "lucide-react";
 import { prisma } from "../prisma";
-import { Session } from "next-auth";
 import { HomeDataType } from "@/app/(logged)/dashboard/page";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
+import { cacheLife, cacheTag } from "next/cache";
 
 export type DataType = {
     label: string,
     value: number,
-    icon: LucideIcon
+    icon: "clock" | "calendar" | "user" | "check";
 }
 
 
 // forneçe as informações principais corretamentes baseada no login em monitor e aluno,
-export async function getHomeData({user, isMonitor} : {user: Session["user"], isMonitor: boolean}): Promise<HomeDataType>{
+export async function getHomeData({userId, isMonitor} : {userId: string, isMonitor: boolean}): Promise<HomeDataType>{
+    'use cache'
+    cacheLife("minutes");
+    cacheTag("appointments");
+
     const monitor = await prisma.monitor.findUnique({
-        where : { userId: user.id }
+        where : { userId: userId }
     });
     
     // data que será mapeado na tela
     let data: DataType[] = [
-        {label: isMonitor ? "Pendentes" : "Agendados", value: -1, icon: isMonitor ? Clock : Calendar},
-        {label: "Realizados", value: -1, icon: CircleCheckBig},
-        {label: isMonitor ? "Disponíveis" : "Monitores", value: -1, icon: isMonitor ? Calendar : User},
+        {label: isMonitor ? "Pendentes" : "Agendados", value: -1, icon: isMonitor ? "clock" : "calendar"},
+        {label: "Realizados", value: -1, icon: "check"},
+        {label: isMonitor ? "Disponíveis" : "Monitores", value: -1, icon: isMonitor ? "calendar" : "user"},
     ];
 
     // requisição para pegar os dados das informações corretamente
     const where = isMonitor 
         ? { monitorId : monitor!.id }
-        : { studentId: user.id };
+        : { studentId: userId };
 
     const appointments: AppointmentType[] = await prisma.appointment.findMany({ where, include: {
         student: {

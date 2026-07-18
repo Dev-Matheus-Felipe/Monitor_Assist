@@ -36,7 +36,7 @@ export default async  function Dashboard(){
             </div>
 
             <Suspense fallback={<DashboardLoading />}>
-                <MainData session={session} />
+                <MainData userId={session.user.id} activeProfile={session.user.activeProfile} />
             </Suspense>
 
             <QuickAcess isMonitor={session.user.activeProfile == "monitor"} />

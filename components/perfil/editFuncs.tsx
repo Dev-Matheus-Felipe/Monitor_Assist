@@ -5,7 +5,6 @@ import editProfile from "@/lib/serverFunctions/editProfile";
 import { editProfileSchema } from "@/lib/zod/editProfile";
 import { MonitorWithSlots } from "@/types/monitor/monitorTypes";
 import { ArrowDown, Pencil, Star } from "lucide-react";
-import { Session } from "next-auth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,10 +17,12 @@ type DepartamentType = {
 
 export default function EditFuncsPage({
     monitor,
-    user
+    userName,
+    userImage
 } : {
     monitor: MonitorWithSlots,
-    user: Session["user"]
+    userName: string,
+    userImage: string
 }){
 
     const [department, setDepartment] = useState<DepartamentType>({value: monitor.department ?? "Undefined", open: false});
@@ -62,7 +63,7 @@ export default function EditFuncsPage({
 
             <div className="flex items-start gap-5 mt-2">
                 <Image
-                    src={user.image ?? ""} 
+                    src={userImage} 
                     alt="Monitor Image" 
                     width={35} 
                     height={35}
@@ -71,7 +72,7 @@ export default function EditFuncsPage({
 
                 <div className="flex-1">
                     <div className="flex gap-2 items-center">
-                        <h2 className="font-medium text-xl text-foreground">{user.name}</h2>
+                        <h2 className="font-medium text-xl text-foreground">{userName}</h2>
 
                         <div className="flex items-center gap-1 ">
                             <Star size={12}/>

@@ -24,7 +24,7 @@ export default async function Atendimentos() {
       </div>
 
       <Suspense fallback={<AppointmentLoading />}>
-        <Maindata session={session} />
+        <Maindata userId={session.user.id} />
       </Suspense>
     </div>
   );

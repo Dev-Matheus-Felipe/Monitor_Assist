@@ -35,7 +35,7 @@ export  default async function MeuPerfilPage() {
         <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Meu Perfil</h1>
       </div>
 
-      <EditFuncsPage monitor={monitor} user={user} />
+      <EditFuncsPage monitor={monitor} userName={user.name} userImage={user.image ?? ""} />
       <Horarios monitor={monitor} />
 
     </div>
