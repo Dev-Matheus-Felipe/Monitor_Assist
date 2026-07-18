@@ -32,8 +32,8 @@ export async function addNewSlots({newDate, newTimes} : {newDate: string, newTim
             data: slots
         });
 
-        updateTag("appointments");
-        updateTag("dashboard");
+        updateTag(`appointments-${session.user.id}`);
+        updateTag(`dashboard-${session.user.id}`);
         
         return {status: true, message: "schedules created successfully."};
     } catch (error) {

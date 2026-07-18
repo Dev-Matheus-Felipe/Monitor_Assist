@@ -3,8 +3,12 @@
 import { ServerSideResponse } from "@/types/generals";
 import { prisma } from "../prisma";
 import { updateTag } from "next/cache";
+import { auth } from "../auth";
 
 export default async function serverCancelAppoitment({id} : {id: string}):Promise<ServerSideResponse>{
+    const session = await auth();
+    if(!session?.user) return {status: false, message: "Not authenticated"};
+    
     const appoitment =  await prisma.appointment.findUnique({where: {id}});
     if(!appoitment) return {status: false, message: "appoitment not found"};
     
@@ -17,8 +21,9 @@ export default async function serverCancelAppoitment({id} : {id: string}):Promis
         });
 
         await prisma.appointment.delete({where: {id: appoitment.id}});
-        updateTag("appointments");
-        updateTag("dashboard");
+        
+        updateTag(`appointments-${session.user.id}`);
+        updateTag(`dashboard-${session.user.id}`);
         
         return {status: true, message: "Appoitment canceled successfully."};
 

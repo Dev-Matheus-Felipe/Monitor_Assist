@@ -45,8 +45,8 @@ export async function Serverschedule({
             data: {isBooked: true}
         })
 
-        updateTag("appointments");
-        updateTag("dashboard");
+        updateTag(`appointments-${session.user.id}`);
+        updateTag(`dashboard-${session.user.id}`);
         
         return {status: true, message: "Appointment successfully scheduled."};
 

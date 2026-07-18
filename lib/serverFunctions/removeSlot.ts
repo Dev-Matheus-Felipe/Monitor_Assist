@@ -2,8 +2,11 @@
 
 import { updateTag } from "next/cache";
 import { prisma } from "../prisma"
+import { auth } from "../auth";
 
 export async function serverRemoveSlot({id, monitorId} : {id: string[], monitorId: string}){
+    const session = await auth();
+    if(!session?.user) return;
 
     await prisma.availableSlot.deleteMany({
         where: {
@@ -12,6 +15,6 @@ export async function serverRemoveSlot({id, monitorId} : {id: string[], monitorI
         }
     });
 
-    updateTag("appointments");
-    updateTag("dashboard");
+    updateTag(`appointments-${session.user.id}`);
+    updateTag(`dashboard-${session.user.id}`);
 }

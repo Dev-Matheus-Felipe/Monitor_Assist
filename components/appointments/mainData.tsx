@@ -6,7 +6,7 @@ import { cacheLife, cacheTag } from "next/cache";
 export default async function Maindata({userId} : {userId: string}){
     'use cache'
     cacheLife("hours");
-    cacheTag("appointments");
+    cacheTag(`appointments-${userId}`);
     
     const appointments: AppointmentType[] = await prisma.appointment.findMany({
         where: {studentId: userId},

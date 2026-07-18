@@ -27,7 +27,6 @@ export default async  function Dashboard(){
     if(!session?.user) redirect("/login");    
 
     
-
     return (
         <div className="w-full h-full flex flex-col gap-8">
             <div>
