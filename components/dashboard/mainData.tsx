@@ -10,7 +10,6 @@ export default async function MainData({
     userId: string,
     activeProfile: "aluno" | "monitor"
 }){
-    
     // data que será mapeado para visualização
     const homeData: HomeDataType = await getHomeData({
         userId: userId, 

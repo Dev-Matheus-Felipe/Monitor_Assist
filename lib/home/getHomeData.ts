@@ -14,8 +14,9 @@ export type DataType = {
 // forneçe as informações principais corretamentes baseada no login em monitor e aluno,
 export async function getHomeData({userId, isMonitor} : {userId: string, isMonitor: boolean}): Promise<HomeDataType>{
     'use cache'
-    cacheLife("minutes");
-    cacheTag("appointments");
+    cacheLife("hours");
+    cacheTag("dashboard");
+
 
     const monitor = await prisma.monitor.findUnique({
         where : { userId: userId }

@@ -13,4 +13,5 @@ export async function serverRemoveSlot({id, monitorId} : {id: string[], monitorI
     });
 
     updateTag("appointments");
+    updateTag("dashboard");
 }

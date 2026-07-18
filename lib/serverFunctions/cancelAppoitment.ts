@@ -18,6 +18,7 @@ export default async function serverCancelAppoitment({id} : {id: string}):Promis
 
         await prisma.appointment.delete({where: {id: appoitment.id}});
         updateTag("appointments");
+        updateTag("dashboard");
         
         return {status: true, message: "Appoitment canceled successfully."};
 

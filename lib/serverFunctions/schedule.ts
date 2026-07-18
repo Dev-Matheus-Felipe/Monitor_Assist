@@ -46,6 +46,8 @@ export async function Serverschedule({
         })
 
         updateTag("appointments");
+        updateTag("dashboard");
+        
         return {status: true, message: "Appointment successfully scheduled."};
 
     } catch (error) {

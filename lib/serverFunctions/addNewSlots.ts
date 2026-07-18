@@ -33,6 +33,8 @@ export async function addNewSlots({newDate, newTimes} : {newDate: string, newTim
         });
 
         updateTag("appointments");
+        updateTag("dashboard");
+        
         return {status: true, message: "schedules created successfully."};
     } catch (error) {
 

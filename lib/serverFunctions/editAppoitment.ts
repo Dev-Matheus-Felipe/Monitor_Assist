@@ -12,6 +12,7 @@ export async function ServerEditAppoitment({id, status} : {id: string, status: "
         })
 
         updateTag("appointments");
+        updateTag("dashboard");
         return {status: true, message: "Appoitment updated sucessfully."};
 
     } catch (error) {
