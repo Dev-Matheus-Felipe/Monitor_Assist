@@ -3,6 +3,7 @@
 import { ServerSideResponse } from "@/types/generals";
 import { auth } from "../auth"
 import { prisma } from "../prisma";
+import { updateTag } from "next/cache";
 
 // server function responsável pelo cadastramento de novos horários
 export async function addNewSlots({newDate, newTimes} : {newDate: string, newTimes: string[]}): Promise<ServerSideResponse>{
@@ -31,6 +32,7 @@ export async function addNewSlots({newDate, newTimes} : {newDate: string, newTim
             data: slots
         });
 
+        updateTag("appointments");
         return {status: true, message: "schedules created successfully."};
     } catch (error) {
 

@@ -27,7 +27,7 @@ export  default async function MeuPerfilPage() {
   if(!monitor) redirect("/dashboard");
 
   const user = session.user;
-
+  
   return (
     <div className="w-full h-full">
       <div>

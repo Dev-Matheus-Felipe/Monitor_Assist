@@ -4,6 +4,7 @@ import { ServerSideResponse } from "@/types/generals";
 import { auth } from "../auth";
 import { prisma } from "../prisma";
 import { timeType } from "@/components/modals/newAppointment/newAtendt";
+import { updateTag } from "next/cache";
 
 export async function Serverschedule({
     selectedTime,
@@ -43,7 +44,8 @@ export async function Serverschedule({
             where: { id: selectedTime.id },
             data: {isBooked: true}
         })
-        
+
+        updateTag("appointments");
         return {status: true, message: "Appointment successfully scheduled."};
 
     } catch (error) {

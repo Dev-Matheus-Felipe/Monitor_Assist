@@ -3,11 +3,13 @@ import Boxes from "../dashboard/boxes";
 import NextAptHome from "../dashboard/nextApt";
 import { getHomeData } from "@/lib/home/getHomeData";
 import { Session } from "next-auth";
+import { cacheLife, cacheTag } from "next/cache";
 
 export default async function MainData({session} : {session: Session}){
-
+    'use cache'
+    cacheLife("minutes");
+    cacheTag("appointments");
     // data que será mapeado para visualização
-
     const homeData: HomeDataType = await getHomeData({
         user: session.user, 
         isMonitor: session.user.activeProfile == "monitor",

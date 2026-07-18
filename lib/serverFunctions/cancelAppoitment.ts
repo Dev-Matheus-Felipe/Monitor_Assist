@@ -2,6 +2,7 @@
 
 import { ServerSideResponse } from "@/types/generals";
 import { prisma } from "../prisma";
+import { updateTag } from "next/cache";
 
 export default async function serverCancelAppoitment({id} : {id: string}):Promise<ServerSideResponse>{
     const appoitment =  await prisma.appointment.findUnique({where: {id}});
@@ -16,7 +17,8 @@ export default async function serverCancelAppoitment({id} : {id: string}):Promis
         });
 
         await prisma.appointment.delete({where: {id: appoitment.id}});
-
+        updateTag("appointments");
+        
         return {status: true, message: "Appoitment canceled successfully."};
 
     } catch (error) {

@@ -1,5 +1,6 @@
 "use server"
 
+import { updateTag } from "next/cache";
 import { prisma } from "../prisma"
 
 export async function serverRemoveSlot({id, monitorId} : {id: string[], monitorId: string}){
@@ -9,5 +10,7 @@ export async function serverRemoveSlot({id, monitorId} : {id: string[], monitorI
             id: { in: id },
             monitorId: monitorId
         }
-    })
+    });
+
+    updateTag("appointments");
 }

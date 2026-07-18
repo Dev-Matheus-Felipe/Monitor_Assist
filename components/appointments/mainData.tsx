@@ -2,8 +2,13 @@ import { prisma } from "@/lib/prisma";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
 import { Session } from "next-auth";
 import AtendDashboard from "./dashboard";
+import { cacheLife, cacheTag } from "next/cache";
 
 export default async function Maindata({session} : {session: Session}){
+    'use cache'
+    cacheLife("minutes");
+    cacheTag("appointments");
+    
     const appointments: AppointmentType[] = await prisma.appointment.findMany({
         where: {studentId: session.user.id},
         include: {

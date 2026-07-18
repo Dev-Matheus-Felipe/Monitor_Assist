@@ -154,7 +154,7 @@ export default function Horarios({monitor} : {monitor: MonitorWithSlots }){
                                             <div key={index} className={`flex items-center gap-1 px-2.5 py-1 rounded border 
                                             font-mono text-xs text-muted-foreground
                                             ${e.isBooked 
-                                                ? "bg-secondary/60 border-secondary text-secondary-foreground" 
+                                                ? "bg-primary text-white" 
                                                 : "border-border bg-muted text-muted-foreground"}`}>
                                                 {e.horario}
                                             </div>

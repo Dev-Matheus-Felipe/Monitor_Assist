@@ -24,7 +24,7 @@ export default function Loading(){
                 <div className="relative flex-1 min-w-5">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <div 
-                    className={`w-full h-12 pl-9 pr-4 py-2.5 rounded  bg-input-background 
+                    className={`w-full h-11 pl-9 pr-4 py-2.5 rounded  bg-input-background 
                     text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring/30`} />
                 </div>
 
@@ -32,8 +32,8 @@ export default function Loading(){
                   {departments.map((d) => (
                     <button
                         key={d} 
-                        className={`px-3 py-2 rounded border text-sm font-mono transition-all whitespace-nowrap cursor-pointer
-                        border-border bg-card text-foreground hover:border-primary/40`}>{d}</button>
+                        className={`px-3 py-2 rounded text-sm font-mono transition-all whitespace-nowrap cursor-pointer
+                        bg-card text-foreground hover:border-primary/40`}>{d}</button>
                   ))}
                 </div>
             </div>
@@ -41,9 +41,8 @@ export default function Loading(){
             {/* EXIBIÇÃO DOS MONITORES */}
             <div className="grid gap-4 sm:grid-cols-2">
                 
-                <div className="bg-card rounded-lg p-5 hover:shadow-md transition-shadow h-30" />
-                <div className="bg-card rounded-lg p-5 hover:shadow-md transition-shadow h-30" />
-                <div className="bg-card rounded-lg p-5 hover:shadow-md transition-shadow h-30" />
+                <div className="bg-card rounded-lg p-5 hover:shadow-md transition-shadow h-48" />
+                <div className="bg-card rounded-lg p-5 hover:shadow-md transition-shadow h-48" />
             </div>
         </div>
     </div>

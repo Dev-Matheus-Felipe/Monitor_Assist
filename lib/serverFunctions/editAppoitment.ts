@@ -2,6 +2,7 @@
 
 import { ServerSideResponse } from "@/types/generals"
 import { prisma } from "../prisma"
+import { updateTag } from "next/cache";
 
 export async function ServerEditAppoitment({id, status} : {id: string, status: "completed" | "upcoming"}):Promise<ServerSideResponse> {
     try {
@@ -10,6 +11,7 @@ export async function ServerEditAppoitment({id, status} : {id: string, status: "
             data: {status}
         })
 
+        updateTag("appointments");
         return {status: true, message: "Appoitment updated sucessfully."};
 
     } catch (error) {
