@@ -13,8 +13,8 @@ export type DataType = {
 
 // forneçe as informações principais corretamentes baseada no login em monitor e aluno,
 export async function getHomeData({userId, isMonitor} : {userId: string, isMonitor: boolean}): Promise<HomeDataType>{
-    'use cache'
-    cacheLife("hours");
+    'use cache: remote'
+    cacheLife("minutes");
     cacheTag(`dashboard-${userId}`);
 
 
