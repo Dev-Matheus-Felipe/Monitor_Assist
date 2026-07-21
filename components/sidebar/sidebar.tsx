@@ -28,23 +28,42 @@ function getNavItems({role} : {role: "monitor" | "aluno"}){
 }
 
 export default function Sidebar() {
-    const {data: session} = useSession();
+    const {data: session, status} = useSession();
     
     const [activeView, setActiveView] = useState<string>("/dashboard");
     const [mobileMenu, setMobileMenu] = useState<boolean>(false);
     
     // track o path para colorir os items na navegação corretamente
     const pathname = usePathname().split("/")[1];
-    const user = session?.user;
     
     useEffect(() => {
         setActiveView("/" + pathname);
     }, [pathname]);
     
     // items de navegação para a redenrização
-    if(!user) return null;
+    if (status === "loading") {
+        return (
+             <aside
+                className={`w-64 bg-sidebar flex flex-col transition-transform duration-500 z-20 h-screen
+                lg:translate-x-0 -translate-x-full lg:relative fixed ${mobileMenu && "translate-x-0"}`}>
 
-    const navItems: NavItemsType[] = getNavItems({role: user.activeProfile});
+            </aside>
+        );
+    }
+
+
+    // terminou de buscar e não tem usuário
+    if (status === "unauthenticated" || !session?.user) {
+        return null;
+    }
+
+
+    // aqui TypeScript sabe que existe sessão
+    const user = session.user;
+
+    const navItems = getNavItems({
+        role: user.activeProfile
+    });
     
     return (
         <>
