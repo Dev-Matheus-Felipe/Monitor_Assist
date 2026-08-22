@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import MobilenNavbar from "./mobileNavbar";
 import { signOut, useSession } from "next-auth/react";
 import Navegation from "./navegation";
-import { User } from "next-auth";
 import Image from "next/image";
 
 // tipagem da navegação da sidebar

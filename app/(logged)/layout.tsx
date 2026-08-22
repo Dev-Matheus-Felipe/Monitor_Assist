@@ -15,7 +15,7 @@ export default function RootLayout({
       </SessionProvider>
 
       <div className="flex flex-1 p-[2%] max-sm:p-2 overflow-y-auto h-screen">
-        <Suspense fallback={<p>LOADING...</p>}>
+        <Suspense fallback={<p></p>}>
           {children}
         </Suspense>
       </div>
