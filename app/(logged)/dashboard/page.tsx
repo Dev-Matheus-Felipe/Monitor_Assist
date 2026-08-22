@@ -3,8 +3,6 @@ import { auth } from "@/lib/auth";
 import { DataType } from "@/lib/home/getHomeData";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
 import QuickAcess from "@/components/dashboard/quickAcess";
-import { Suspense } from "react";
-import DashboardLoading from "@/components/loadings/dashboardLoading";
 import MainData from "@/components/dashboard/mainData";
 
 import type { Metadata } from "next";
@@ -35,11 +33,10 @@ export default async  function Dashboard(){
                 </h1>       
             </div>
 
-            <Suspense fallback={<DashboardLoading />}>
-                <MainData userId={session.user.id} activeProfile={session.user.activeProfile} />
-            </Suspense>
+            <MainData userId={session.user.id} activeProfile={session.user.activeProfile} />
 
             <QuickAcess isMonitor={session.user.activeProfile == "monitor"} />
         </div>
     );
 }
+

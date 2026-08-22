@@ -1,7 +1,5 @@
 import { auth } from "@/lib/auth";
 import Maindata from "@/components/appointments/mainData";
-import { Suspense } from "react";
-import AppointmentLoading from "@/components/loadings/appointmentLoading";
 
 import type { Metadata } from "next";
 
@@ -23,9 +21,7 @@ export default async function Atendimentos() {
         <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Meus atendimentos</h1>
       </div>
 
-      <Suspense fallback={<AppointmentLoading />}>
-        <Maindata userId={session.user.id} />
-      </Suspense>
+      <Maindata userId={session.user.id} />
     </div>
   );
 }
