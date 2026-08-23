@@ -1,6 +1,5 @@
 import Sidebar from "@/components/sidebar/sidebar";
 import { SessionProvider } from "next-auth/react";
-import { Suspense } from "react";
 
 export default function RootLayout({
   children,

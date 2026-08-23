@@ -4,7 +4,6 @@ import { Toaster } from "sonner";
 import "./globals.css";
 
 import type { Metadata } from "next";
-import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://your-domain.com"),
@@ -50,11 +49,6 @@ export default function RootLayout({
           </ViewAppointmentProvider>
           
         <Toaster />
-        <NextTopLoader
-          color="#711ab8"
-          height={3}
-          showSpinner={false}
-        />
       </body>
     </html>
   );

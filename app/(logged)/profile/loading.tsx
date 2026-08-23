@@ -7,7 +7,9 @@ export default function Loading(){
             </div>
 
             <div className="bg-card h-40 rounded-lg p-6 mt-6 relative flex flex-col"/>
-            <div className="bg-card flex-1 rounded-lg"/>
+            <div className="flex-1 flex justify-center items-center">
+                <div className="w-8 h-8 border-4 border-background border-t-primary rounded-full animate-spin" />
+            </div>
         </div>
     )
 }
