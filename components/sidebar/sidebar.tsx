@@ -67,10 +67,6 @@ export default function Sidebar() {
                         </div>
                     </div>
                 </div>
-
-                <div className="flex-1 flex flex-col justify-between p-2">
-                    <div className="w-full h-30 bg-card m-2 rounded" />
-                </div>
             </aside>
         );
     }
