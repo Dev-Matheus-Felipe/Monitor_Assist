@@ -24,7 +24,8 @@ export default async function serverCancelAppoitment({id} : {id: string}):Promis
         
         updateTag(`appointments-${session.user.id}`);
         updateTag(`dashboard-${session.user.id}`);
-        
+        updateTag(`tutors`);
+
         return {status: true, message: "Appoitment canceled successfully."};
 
     } catch (error) {

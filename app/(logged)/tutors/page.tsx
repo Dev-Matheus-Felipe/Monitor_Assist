@@ -3,8 +3,11 @@
 import MonitorSearch from "@/components/monitores/monitorSearch";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { prisma } from "@/lib/prisma"
+import { cacheLife, cacheTag } from "next/cache";
 
 export default async function Monitores(){
+  cacheLife("minutes");
+  cacheTag(`tutors`);
 
   const monitores: MonitorWithAll[] = await prisma.monitor.findMany({
     include: {slots: {where: {isBooked: false}}, user: true}

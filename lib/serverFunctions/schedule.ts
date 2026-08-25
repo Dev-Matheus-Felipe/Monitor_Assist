@@ -47,6 +47,7 @@ export async function Serverschedule({
 
         updateTag(`appointments-${session.user.id}`);
         updateTag(`dashboard-${session.user.id}`);
+        updateTag(`tutors`);
         
         return {status: true, message: "Appointment successfully scheduled."};
 
