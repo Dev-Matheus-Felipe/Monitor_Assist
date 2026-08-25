@@ -17,7 +17,7 @@ export default function Navegation({
             {
                 navItems.map(({ id, label, icon: Icon }) => (
                     <Link
-                    prefetch={id != "/dashboard" ? true : false}
+                    prefetch={true}
                     onClick={()=> setMobileMenu(false)}
                     href={id}
                     key={id}
