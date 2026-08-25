@@ -1,3 +1,5 @@
+"use cache"
+
 import MonitorSearch from "@/components/monitores/monitorSearch";
 import { MonitorWithAll } from "@/types/monitor/monitorTypes";
 import { prisma } from "@/lib/prisma"
