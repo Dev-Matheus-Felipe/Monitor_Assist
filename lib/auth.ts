@@ -21,19 +21,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
 
     // atualiza a sessão atual baseado no que eu quero que tenha
-    async session({ session, user, token }) {
-        if (user) {
-            session.user = {
+    async session({ session, user }) {
+        if (!user) return session;
+
+        return {
+            expires: session.expires,
+            user: {
                 id: user.id,
                 email: user.email,
                 image: user.image,
                 name: user.name ?? "",
                 emailVerified: user.emailVerified,
                 activeProfile: user.activeProfile,
-            };
-        }
-
-        return session;
+            },
+        };
     },
   },
 })
