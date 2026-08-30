@@ -17,7 +17,6 @@ export default function Navegation({
             {
                 navItems.map(({ id, label, icon: Icon }) => (
                     <Link
-                    prefetch={true}
                     onClick={()=> setMobileMenu(false)}
                     href={id}
                     key={id}
@@ -28,8 +27,9 @@ export default function Navegation({
                         : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/40"
                     }`}
                     >
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span className="flex-1 text-left">{label}</span>
+
+                        <Icon className="w-4 h-4 shrink-0" />
+                        <span className="flex-1 text-left">{label}</span>
                     
                     </Link>
                 ))

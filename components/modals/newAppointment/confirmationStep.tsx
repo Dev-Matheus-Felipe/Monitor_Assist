@@ -12,7 +12,7 @@ export function formatDate({selectedDate} : {selectedDate: string}){
     const newDay = new Date(year, month - 1, day);
 
     let result = diasSemana[newDay.getDay()];
-    result += `, ${newDay.toLocaleDateString("pt-Br", {
+    result += `, ${newDay.toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long"
     })}`;

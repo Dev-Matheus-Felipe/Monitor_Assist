@@ -29,7 +29,7 @@ export default function NextAptHome({
                         </p>
                         
                         <p className="font-mono text-sm my-3.5 opacity-90">
-                            {appointment.date.toLocaleDateString()}
+                            {appointment.date.toLocaleDateString("pt-BR")}
                         </p>
 
                         <p className="text-sm opacity-80 line-clamp-1">{appointment.topic}</p> 

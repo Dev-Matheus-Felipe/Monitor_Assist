@@ -181,7 +181,7 @@ export default function ViewAppointment({
                 </div>
 
                 <div className="flex items-center justify-between text-xs font-mono text-muted-foreground pt-1 border-t border-border">
-                    <span>Criado em {data.createdAt.toLocaleDateString()}</span>
+                    <span>Criado em {data.createdAt.toLocaleDateString("pt-BR")}</span>
                     {
                         (session.user.activeProfile == "monitor" && status.status != data.status)  ? 
                         <button 

@@ -77,7 +77,7 @@ export default function NewAtendtModal({monitor} : {monitor: MonitorWithAll}){
                                         onClick={() => { 
                                             setSelectedDate(d.time); 
                                             setSelectedTime({time: "", id: ""});
-                                             setHorarios(d.horarios)
+                                            setHorarios(d.horarios)
                                         }}
 
                                         className={`p-3 rounded border text-left transition-all cursor-pointer

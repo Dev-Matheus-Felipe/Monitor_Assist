@@ -13,13 +13,12 @@ export default async function Maindata({userId} : {userId: string}){
         include: {
         student: {
             select: {
-            name: true,
+                name: true,
             }
         },
         monitor: {
             include: {
-            user: true
-            
+                user: true
             }
         }
         }
