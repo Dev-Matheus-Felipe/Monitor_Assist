@@ -2,27 +2,36 @@ import { prisma } from "@/lib/prisma";
 import { AppointmentType } from "@/types/appointments/appointmentsType";
 import AtendDashboard from "./dashboard";
 import { cacheLife, cacheTag } from "next/cache";
+import { Session } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default async function Maindata({userId} : {userId: string}){
-    'use cache: remote'
+const getAppointments = async({userId} : {userId: string}) => {
+    'use cache'
     cacheLife("minutes");
     cacheTag(`appointments-${userId}`);
-    
-    const appointments: AppointmentType[] = await prisma.appointment.findMany({
+
+    return await prisma.appointment.findMany({
         where: {studentId: userId},
         include: {
-        student: {
-            select: {
-                name: true,
+            student: {
+                select: {
+                    name: true,
+                }
+            },
+            monitor: {
+                include: {
+                    user: true
+                }
             }
-        },
-        monitor: {
-            include: {
-                user: true
-            }
-        }
         }
     }); 
+}
+
+export default async function Maindata({sessionPromise} : {sessionPromise: Promise<Session | null>}){
+    const session = await sessionPromise;
+    if(!session?.user.id) redirect("/");
+    
+    const appointments: AppointmentType[] = await getAppointments({userId: session.user.id});
 
     return (
         <>

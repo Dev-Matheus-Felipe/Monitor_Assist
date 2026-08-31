@@ -1,7 +1,8 @@
-import { auth } from "@/lib/auth";
 import Maindata from "@/components/appointments/mainData";
-
 import type { Metadata } from "next";
+import getSessionFunc from "@/lib/serverFunctions/getSession";
+import { Suspense } from "react";
+import AppointmentsLoading from "@/components/loadings/appointmentsLoading";
 
 export const metadata: Metadata = {
   title: "Appointments | Atende Monitor",
@@ -10,9 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Atendimentos() {
-
-  const session = await auth();
-  if(!session?.user) return null;
+  const session = getSessionFunc();
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -21,7 +20,9 @@ export default async function Atendimentos() {
         <h1 className="text-3xl text-foreground" style={{ fontFamily: "'Instrument Serif', serif" }}>Meus atendimentos</h1>
       </div>
 
-      <Maindata userId={session.user.id} />
+      <Suspense fallback={ <AppointmentsLoading /> } >
+        <Maindata sessionPromise={session} />
+      </Suspense>
     </div>
   );
 }
